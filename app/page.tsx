@@ -1,22 +1,5 @@
 import Link from "next/link";
-
-const endpoints = [
-  {
-    method: "GET",
-    path: "/api/health",
-    description: "Kiểm tra trạng thái hoạt động của API.",
-  },
-  {
-    method: "POST",
-    path: "/api/auth/login",
-    description: "Xác thực người dùng và lấy thông tin đăng nhập.",
-  },
-  {
-    method: "GET",
-    path: "/api/users",
-    description: "Lấy danh sách người dùng.",
-  },
-];
+import ApiReference from "@/components/ApiReference";
 
 export default function Home() {
   return (
@@ -122,47 +105,7 @@ export default function Home() {
         id="reference"
         className="mx-auto max-w-7xl px-6 pb-20"
       >
-        <div className="mb-6">
-          <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
-            Explore endpoints
-          </p>
-          <h2 className="mt-2 text-3xl font-bold">API Reference</h2>
-          <p className="mt-3 text-slate-400">
-            Một số endpoint minh họa cho bố cục tài liệu.
-          </p>
-        </div>
-
-        <div className="overflow-hidden rounded-xl border border-slate-800">
-          {endpoints.map((endpoint) => (
-            <article
-              key={endpoint.path}
-              className="flex flex-col gap-3 border-b border-slate-800 bg-slate-900 p-5 last:border-b-0 md:flex-row md:items-center"
-            >
-              <span
-                className={`w-fit rounded-md px-3 py-1 text-xs font-bold ${
-                  endpoint.method === "GET"
-                    ? "bg-emerald-400/10 text-emerald-400"
-                    : "bg-blue-400/10 text-blue-400"
-                }`}
-              >
-                {endpoint.method}
-              </span>
-
-              <code className="text-sm font-semibold text-slate-100 md:w-56">
-                {endpoint.path}
-              </code>
-
-              <p className="text-sm leading-6 text-slate-400">
-                {endpoint.description}
-              </p>
-            </article>
-          ))}
-        </div>
-
-        <p className="mt-4 text-sm text-amber-300">
-          Lưu ý: Các endpoint ở trên chỉ là dữ liệu minh họa giao diện,
-          chưa được xác minh là endpoint thực tế của OpenVie.
-        </p>
+        <ApiReference />
       </section>
 
       <footer className="border-t border-slate-800 px-6 py-8 text-center text-sm text-slate-500">

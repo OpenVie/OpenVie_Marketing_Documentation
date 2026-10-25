@@ -1,9 +1,16 @@
 
+export const HTTP_METHODS = [
+  "get", "post", "put", "patch", "delete",
+  "head", "options", "trace",
+] as const;
+
+export type HttpMethod = (typeof HTTP_METHODS)[number];
+
 export interface OpenApiOperation {
   summary?: string;
   description?: string;
-  operationId?: string;
   tags?: string[];
+  operationId?: string;
   parameters?: unknown[];
   requestBody?: unknown;
   responses?: Record<string, unknown>;
@@ -16,23 +23,40 @@ export interface OpenApiDocument {
     version?: string;
     description?: string;
   };
-  servers?: Array<{ url: string }>;
-  tags?: Array<{ name: string; description?: string }>;
-  paths: Record<
-    string,
-    Record<string, unknown>
-  >;
+  paths: Record<string, Record<string, unknown>>;
   components?: {
     schemas?: Record<string, unknown>;
   };
 }
 
-export async function getOpenApiDocument(): Promise<OpenApiDocument> {
-  const response = await fetch("/api/openapi");
+export interface ApiEndpoint {
+  id: string;
+  method: HttpMethod;
+  path: string;
+  operation: OpenApiOperation;
+}
 
-  if (!response.ok) {
-    throw new Error("Không thể tải tài liệu OpenAPI.");
+export function extractEndpoints(
+  document: OpenApiDocument
+): ApiEndpoint[] {
+  const endpoints: ApiEndpoint[] = [];
+
+  for (const [path, pathItem] of Object.entries(document.paths)) {
+    for (const method of HTTP_METHODS) {
+      const operation = pathItem[method];
+
+      if (!operation || typeof operation !== "object") {
+        continue;
+      }
+
+      endpoints.push({
+        id: `${method}:${path}`,
+        method,
+        path,
+        operation: operation as OpenApiOperation,
+      });
+    }
   }
 
-  return response.json();
+  return endpoints;
 }
