@@ -1,11 +1,21 @@
 
 import SchemaViewer from "@/components/SchemaViewer";
 
+
+type ExampleObject = {
+  summary?: string;
+  description?: string;
+  value?: unknown;
+  externalValue?: string;
+  $ref?: string;
+};
+
 type MediaContent = {
   schema?: unknown;
   example?: unknown;
-  examples?: Record<string, unknown>;
+  examples?: Record<string, ExampleObject>;
 };
+
 
 type RequestBody = {
   description?: string;
@@ -25,6 +35,70 @@ type Props = {
   responses?: Record<string, unknown>;
   schemas: Record<string, unknown>;
 };
+
+
+function MockExamplesViewer({
+  media,
+}: {
+  media: MediaContent;
+}) {
+  const examples = Object.entries(media.examples ?? {});
+
+  // Hỗ trợ cả trường example đơn lẻ
+  if (media.example !== undefined) {
+    examples.unshift([
+      "default",
+      {
+        summary: "Default Example",
+        value: media.example,
+      },
+    ]);
+  }
+
+  if (examples.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="mt-5 space-y-3">
+      <h4 className="font-semibold text-cyan-400">
+        Mock Examples
+      </h4>
+
+      <p className="text-xs text-slate-400">
+        Dữ liệu giả lập dùng để minh họa tài liệu.
+        Không phải kết quả gọi API thật.
+      </p>
+
+      {examples.map(([key, example]) => (
+        <details
+          key={key}
+          className="rounded-lg border border-slate-700 p-3"
+        >
+          <summary className="cursor-pointer text-sm font-medium">
+            {example.summary ?? key}
+          </summary>
+
+          {example.description && (
+            <p className="mt-3 text-sm text-slate-400">
+              {example.description}
+            </p>
+          )}
+
+          {example.value !== undefined ? (
+            <pre className="mt-3 overflow-x-auto rounded-lg bg-slate-950 p-4 text-xs leading-6 text-slate-200">
+              {JSON.stringify(example.value, null, 2)}
+            </pre>
+          ) : (
+            <p className="mt-3 text-sm text-slate-400">
+              Ví dụ này không chứa giá trị JSON nội tuyến.
+            </p>
+          )}
+        </details>
+      ))}
+    </div>
+  );
+}
 
 function MediaViewer({
   content,
@@ -66,16 +140,7 @@ function MediaViewer({
             </p>
           )}
 
-          {media.example !== undefined && (
-            <details className="mt-3">
-              <summary className="cursor-pointer text-sm">
-                Example
-              </summary>
-              <pre className="mt-2 overflow-x-auto rounded-lg bg-slate-950 p-3 text-xs">
-                {JSON.stringify(media.example, null, 2)}
-              </pre>
-            </details>
-          )}
+          <MockExamplesViewer media={media} />
         </div>
       ))}
     </div>
