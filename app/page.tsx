@@ -17,14 +17,7 @@ export default function Home() {
             <a href="#reference" className="hover:text-cyan-400">
               API Reference
             </a>
-            <a
-              href="https://swaggerapi.qtitpc.dev/swagger-ui/index.html"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-cyan-400"
-            >
-              Swagger UI ↗
-            </a>
+            
           </nav>
         </div>
       </header>
@@ -53,14 +46,7 @@ export default function Home() {
               Bắt đầu ngay
             </a>
 
-            <a
-              href="https://swaggerapi.qtitpc.dev/swagger-ui/index.html"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-lg border border-slate-700 px-5 py-3 font-semibold hover:border-cyan-400"
-            >
-              Mở Swagger UI
-            </a>
+           
           </div>
         </div>
       </section>

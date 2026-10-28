@@ -26,6 +26,7 @@ function getReferenceName(ref: string): string | null {
     .replace(/~0/g, "~");
 }
 
+
 function getType(schema: Schema): string {
   if (schema.$ref) {
     return getReferenceName(schema.$ref) ?? schema.$ref;
@@ -35,8 +36,17 @@ function getType(schema: Schema): string {
     return `array<${getType(schema.items ?? {})}>`;
   }
 
-  return schema.type ?? "object";
+  if (schema.type) {
+    return schema.type;
+  }
+
+  if (schema.properties) {
+    return "object";
+  }
+
+  return "any";
 }
+
 
 function SchemaDetails({
   schema,
