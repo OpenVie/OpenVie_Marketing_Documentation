@@ -152,7 +152,9 @@ export default function CodeExamples({
         ))}
       </div>
 
-      <pre className="ov-code-block"><code><SyntaxCode code={code} language={language} /></code></pre>
+      <div className="ov-code-scroll" tabIndex={0} aria-label="Scrollable code example">
+        <pre className="ov-code-block"><code><SyntaxCode code={code} language={language} /></code></pre>
+      </div>
     </section>
   );
 }

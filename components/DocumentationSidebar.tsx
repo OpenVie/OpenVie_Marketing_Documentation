@@ -25,7 +25,15 @@ function endpointsForTag(tag: string) {
 
 function EndpointLink({ endpoint }: { endpoint: ApiEndpoint }) {
   return (
-    <a className="ov-api-nav-endpoint" href={`#${endpointAnchorId(endpoint)}`}>
+    <a
+      className="ov-api-nav-endpoint"
+      href={`#${endpointAnchorId(endpoint)}`}
+      onClick={() => {
+        window.dispatchEvent(
+          new CustomEvent("openvie:endpoint-selected", { detail: endpoint.id }),
+        );
+      }}
+    >
       <span className="ov-api-nav-copy">
         <span className="ov-api-nav-summary">{endpoint.operation.summary ?? "API endpoint"}</span>
         <span className="ov-api-nav-path"><b>{endpoint.method}</b> {endpoint.path.replace("/api/v1/", "/")}</span>
