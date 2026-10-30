@@ -70,6 +70,31 @@ export default function ApiReference() {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    const expandEndpointFromHash = () => {
+      const anchor = window.location.hash.slice(1);
+      const endpoint = extractEndpoints(staticDocument).find(
+        (item) => endpointAnchorId(item) === anchor,
+      );
+
+      if (endpoint) setSelectedId(endpoint.id);
+    };
+
+    const expandEndpointFromNavigation = (event: Event) => {
+      const endpointId = (event as CustomEvent<string>).detail;
+      if (endpointId) setSelectedId(endpointId);
+    };
+
+    expandEndpointFromHash();
+    window.addEventListener("hashchange", expandEndpointFromHash);
+    window.addEventListener("openvie:endpoint-selected", expandEndpointFromNavigation);
+
+    return () => {
+      window.removeEventListener("hashchange", expandEndpointFromHash);
+      window.removeEventListener("openvie:endpoint-selected", expandEndpointFromNavigation);
+    };
+  }, []);
+
   if (loading) {
     return <p className="text-slate-400">Đang tải API Reference...</p>;
   }

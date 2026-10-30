@@ -76,15 +76,22 @@ export default function DocumentationHeader() {
               return (
                 <details key={tag} className="ov-mobile-nav-group" open={index === 0}>
                   <summary>
-                    <span>{tag}</span>
-                    <span>{taggedEndpoints.length}</span>
+                    <span>
+                      <strong className="ov-mobile-nav-count">{taggedEndpoints.length}</strong>
+                      {tag}
+                    </span>
                   </summary>
                   <div>
                     {taggedEndpoints.map((endpoint) => (
                       <a
                         key={endpoint.id}
                         href={`#${endpointAnchorId(endpoint)}`}
-                        onClick={() => setMenuOpen(false)}
+                        onClick={() => {
+                          setMenuOpen(false);
+                          window.dispatchEvent(
+                            new CustomEvent("openvie:endpoint-selected", { detail: endpoint.id }),
+                          );
+                        }}
                       >
                         <span>{endpoint.operation.summary ?? "API endpoint"}</span>
                         <small><b>{endpoint.method}</b> {endpoint.path.replace("/api/v1/", "/")}</small>
