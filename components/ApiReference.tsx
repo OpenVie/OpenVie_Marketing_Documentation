@@ -5,13 +5,18 @@ import { useEffect, useState } from "react";
 import SchemaViewer from "@/components/SchemaViewer";
 import ParametersViewer from "@/components/ParametersViewer";
 import RequestResponseViewer from "@/components/RequestResponseViewer";
+import CodeExamples from "@/components/CodeExamples";
 
 import {
   extractEndpoints,
+  endpointAnchorId,
+  HTTP_METHODS,
   type ApiEndpoint,
+  type HttpMethod,
   type OpenApiDocument,
 } from "@/lib/openapi";
 
+type MethodFilter = "all" | HttpMethod;
 
 export default function ApiReference() {
   const [document, setDocument] =
@@ -20,6 +25,9 @@ export default function ApiReference() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [methodFilter, setMethodFilter] = useState<MethodFilter>("all");
+  const [tagFilter, setTagFilter] = useState("all");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -73,6 +81,32 @@ export default function ApiReference() {
 
   const endpoints = extractEndpoints(document);
   const schemas = document.components?.schemas ?? {};
+  const baseUrl = document.servers?.[0]?.url ?? "http://localhost:8080";
+  const tags = Array.from(new Set([
+    ...(document.tags?.map((tag) => tag.name) ?? []),
+    ...endpoints.flatMap((endpoint) => endpoint.operation.tags ?? []),
+  ])).sort((first, second) => first.localeCompare(second));
+  const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
+  const filteredEndpoints = endpoints.filter((endpoint) => {
+    const operation = endpoint.operation;
+    const matchesQuery = !normalizedQuery || [
+      endpoint.path,
+      endpoint.method,
+      operation.summary,
+      operation.description,
+    ].filter(Boolean).join(" ").toLocaleLowerCase().includes(normalizedQuery);
+    const matchesMethod = methodFilter === "all" || endpoint.method === methodFilter;
+    const matchesTag = tagFilter === "all" || operation.tags?.includes(tagFilter);
+
+    return matchesQuery && matchesMethod && matchesTag;
+  });
+  const hasActiveFilters = searchQuery.length > 0 || methodFilter !== "all" || tagFilter !== "all";
+
+  function clearFilters() {
+    setSearchQuery("");
+    setMethodFilter("all");
+    setTagFilter("all");
+  }
 
   return (
     <div className="space-y-8">
@@ -87,15 +121,68 @@ export default function ApiReference() {
         </p>
       </div>
 
+      <section className="ov-api-filters" aria-label="Filter API endpoints">
+        <div className="ov-api-filter-field ov-api-filter-search">
+          <label htmlFor="endpoint-search">Search endpoints</label>
+          <input
+            id="endpoint-search"
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Path, method, or description"
+          />
+        </div>
+
+        <div className="ov-api-filter-field">
+          <label htmlFor="endpoint-method">Method</label>
+          <select
+            id="endpoint-method"
+            value={methodFilter}
+            onChange={(event) => setMethodFilter(event.target.value as MethodFilter)}
+          >
+            <option value="all">All methods</option>
+            {HTTP_METHODS.map((method) => (
+              <option key={method} value={method}>{method.toUpperCase()}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="ov-api-filter-field">
+          <label htmlFor="endpoint-tag">Tag</label>
+          <select
+            id="endpoint-tag"
+            value={tagFilter}
+            onChange={(event) => setTagFilter(event.target.value)}
+          >
+            <option value="all">All tags</option>
+            {tags.map((tag) => <option key={tag} value={tag}>{tag}</option>)}
+          </select>
+        </div>
+
+        <button
+          type="button"
+          className="ov-api-filter-clear"
+          onClick={clearFilters}
+          disabled={!hasActiveFilters}
+        >
+          Clear filters
+        </button>
+      </section>
+
+      <p className="text-sm text-slate-400" role="status">
+        Showing {filteredEndpoints.length} of {endpoints.length} endpoints
+      </p>
+
       <div className="space-y-3">
-        {endpoints.map((endpoint: ApiEndpoint) => {
+        {filteredEndpoints.map((endpoint: ApiEndpoint) => {
           const expanded = selectedId === endpoint.id;
           const operation = endpoint.operation;
 
           return (
             <article
               key={endpoint.id}
-              className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
+              id={endpointAnchorId(endpoint)}
+              className="ov-api-card scroll-mt-24 overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
             >
               <button
                 type="button"
@@ -117,13 +204,13 @@ export default function ApiReference() {
                   {operation.summary ?? "No summary"}
                 </span>
 
-                <span className="ml-auto text-slate-400">
+                <span className="ov-api-expand-icon ml-auto text-slate-400" aria-hidden="true">
                   {expanded ? "−" : "+"}
                 </span>
               </button>
 
               {expanded && (
-                <div className="space-y-5 border-t border-slate-800 p-5">
+                <div className="ov-api-expand space-y-5 border-t border-slate-800 p-5">
                   <p className="text-slate-300">
                     {operation.description ??
                       operation.summary ??
@@ -133,6 +220,8 @@ export default function ApiReference() {
                   <p className="text-sm text-slate-400">
                     Nhóm: {operation.tags?.join(", ") ?? "Không xác định"}
                   </p>
+
+                  <CodeExamples endpoint={endpoint} baseUrl={baseUrl} />
 
                   <section>
                     <h3 className="font-semibold">Parameters</h3>
@@ -149,6 +238,14 @@ export default function ApiReference() {
             </article>
           );
         })}
+
+        {filteredEndpoints.length === 0 && (
+          <div className="ov-api-empty-state" role="status">
+            <p className="font-semibold">No endpoints found</p>
+            <p className="mt-1 text-sm text-slate-400">Try another keyword, HTTP method, or tag.</p>
+            <button type="button" onClick={clearFilters}>Clear filters</button>
+          </div>
+        )}
       </div>
 
       <section>
@@ -161,7 +258,7 @@ export default function ApiReference() {
           {Object.entries(schemas).map(([name, schema]) => (
             <details
               key={name}
-              className="rounded-lg border border-slate-800 bg-slate-900 p-4"
+              className="ov-api-card rounded-lg border border-slate-800 bg-slate-900 p-4"
             >
               <summary className="cursor-pointer font-medium text-cyan-400">
                 {name}

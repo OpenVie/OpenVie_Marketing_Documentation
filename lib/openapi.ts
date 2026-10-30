@@ -14,6 +14,7 @@ export interface OpenApiOperation {
   parameters?: unknown[];
   requestBody?: unknown;
   responses?: Record<string, unknown>;
+  security?: Array<Record<string, string[]>>;
 }
 
 export interface OpenApiDocument {
@@ -24,6 +25,13 @@ export interface OpenApiDocument {
     description?: string;
   };
   paths: Record<string, Record<string, unknown>>;
+  tags?: Array<{
+    name: string;
+    description?: string;
+  }>;
+  servers?: Array<{
+    url: string;
+  }>;
   components?: {
     schemas?: Record<string, unknown>;
   };
@@ -34,6 +42,10 @@ export interface ApiEndpoint {
   method: HttpMethod;
   path: string;
   operation: OpenApiOperation;
+}
+
+export function endpointAnchorId(endpoint: Pick<ApiEndpoint, "id">): string {
+  return `endpoint-${endpoint.id.replace(/[^a-z0-9]+/gi, "-").replace(/(^-|-$)/g, "")}`;
 }
 
 export function extractEndpoints(
