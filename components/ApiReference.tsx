@@ -8,6 +8,7 @@ import RequestResponseViewer from "@/components/RequestResponseViewer";
 
 import {
   extractEndpoints,
+  endpointAnchorId,
   type ApiEndpoint,
   type OpenApiDocument,
 } from "@/lib/openapi";
@@ -95,7 +96,8 @@ export default function ApiReference() {
           return (
             <article
               key={endpoint.id}
-              className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
+              id={endpointAnchorId(endpoint)}
+              className="ov-api-card scroll-mt-24 overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
             >
               <button
                 type="button"
@@ -117,13 +119,13 @@ export default function ApiReference() {
                   {operation.summary ?? "No summary"}
                 </span>
 
-                <span className="ml-auto text-slate-400">
+                <span className="ov-api-expand-icon ml-auto text-slate-400" aria-hidden="true">
                   {expanded ? "−" : "+"}
                 </span>
               </button>
 
               {expanded && (
-                <div className="space-y-5 border-t border-slate-800 p-5">
+                <div className="ov-api-expand space-y-5 border-t border-slate-800 p-5">
                   <p className="text-slate-300">
                     {operation.description ??
                       operation.summary ??
@@ -161,7 +163,7 @@ export default function ApiReference() {
           {Object.entries(schemas).map(([name, schema]) => (
             <details
               key={name}
-              className="rounded-lg border border-slate-800 bg-slate-900 p-4"
+              className="ov-api-card rounded-lg border border-slate-800 bg-slate-900 p-4"
             >
               <summary className="cursor-pointer font-medium text-cyan-400">
                 {name}
