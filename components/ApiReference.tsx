@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import SchemaViewer from "@/components/SchemaViewer";
 import ParametersViewer from "@/components/ParametersViewer";
 import RequestResponseViewer from "@/components/RequestResponseViewer";
+import CodeExamples from "@/components/CodeExamples";
 
 import {
   extractEndpoints,
@@ -80,6 +81,7 @@ export default function ApiReference() {
 
   const endpoints = extractEndpoints(document);
   const schemas = document.components?.schemas ?? {};
+  const baseUrl = document.servers?.[0]?.url ?? "http://localhost:8080";
   const tags = Array.from(new Set([
     ...(document.tags?.map((tag) => tag.name) ?? []),
     ...endpoints.flatMap((endpoint) => endpoint.operation.tags ?? []),
@@ -218,6 +220,8 @@ export default function ApiReference() {
                   <p className="text-sm text-slate-400">
                     Nhóm: {operation.tags?.join(", ") ?? "Không xác định"}
                   </p>
+
+                  <CodeExamples endpoint={endpoint} baseUrl={baseUrl} />
 
                   <section>
                     <h3 className="font-semibold">Parameters</h3>

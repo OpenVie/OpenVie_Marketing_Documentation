@@ -164,6 +164,28 @@ html[data-ov-theme="light"] .ov-api-nav-path b { color: #527400; }
 html[data-ov-theme="light"] .ov-api-filter-field input, html[data-ov-theme="light"] .ov-api-filter-field select { background: #ffffff; }
 html[data-ov-theme="light"] .ov-api-empty-state button { color: #24590b; }
 
+/* Copyable request examples */
+.ov-code-examples { overflow: hidden; border: 1px solid var(--ov-docs-border); border-radius: 12px; background: var(--ov-docs-surface-strong); box-shadow: inset 0 1px 0 rgb(255 255 255 / .08); }
+.ov-code-examples-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 16px 16px 0; }
+.ov-code-examples-header h3 { color: var(--ov-docs-text); }
+.ov-code-copy { flex: 0 0 auto; border: 1px solid rgb(200 245 60 / .45); border-radius: 7px; background: rgb(200 245 60 / .1); padding: 7px 11px; color: #c8f53c; font-size: .75rem; font-weight: 750; cursor: pointer; transition: transform .2s, background .2s, border-color .2s; }
+.ov-code-copy:hover { transform: translateY(-1px); border-color: #c8f53c; background: rgb(200 245 60 / .18); }
+.ov-code-tabs { display: flex; gap: 6px; margin: 14px 16px 12px; }
+.ov-code-tabs button { border: 1px solid var(--ov-docs-border); border-radius: 6px; background: transparent; padding: 6px 10px; color: var(--ov-docs-muted); font-size: .75rem; font-weight: 700; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+.ov-code-tabs button:hover { background: var(--ov-docs-surface); color: var(--ov-docs-text); }
+.ov-code-tabs button.is-active { border-color: #c8f53c; background: rgb(200 245 60 / .12); color: #c8f53c; }
+.ov-docs-shell pre.ov-code-block { margin: 0; border: 0; border-radius: 0; background: #101712 !important; padding: 16px; color: #edf5e9 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .75rem; line-height: 1.8; }
+.ov-docs-shell pre.ov-code-block code { color: #e4eee0 !important; font-family: inherit; font-weight: 500; }
+.ov-code-token-keyword { color: #d7a6ff; }
+.ov-code-token-function { color: #82cfff; }
+.ov-code-token-property { color: #78d6bd; }
+.ov-code-token-string { color: #f4cf8b; }
+.ov-code-token-command { color: #d9ff68; }
+html[data-ov-theme="light"] .ov-code-examples { border-color: #c8d0c4; background: #ffffff; box-shadow: 0 1px 2px rgb(22 34 22 / .06); }
+html[data-ov-theme="light"] .ov-code-copy { border-color: #43821b; background: #edf8e5; color: #24590b; }
+html[data-ov-theme="light"] .ov-code-tabs button.is-active { border-color: #43821b; background: #edf8e5; color: #24590b; }
+html[data-ov-theme="light"] .ov-docs-shell pre.ov-code-block { background: #17201b !important; }
+
 @media (min-width: 640px) {
   .ov-api-filters { grid-template-columns: minmax(0, 1fr) 140px 190px auto; align-items: end; }
 }

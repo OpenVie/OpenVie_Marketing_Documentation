@@ -14,6 +14,7 @@ export interface OpenApiOperation {
   parameters?: unknown[];
   requestBody?: unknown;
   responses?: Record<string, unknown>;
+  security?: Array<Record<string, string[]>>;
 }
 
 export interface OpenApiDocument {
@@ -27,6 +28,9 @@ export interface OpenApiDocument {
   tags?: Array<{
     name: string;
     description?: string;
+  }>;
+  servers?: Array<{
+    url: string;
   }>;
   components?: {
     schemas?: Record<string, unknown>;
