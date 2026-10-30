@@ -149,6 +149,25 @@ html[data-ov-theme="light"] .ov-api-nav-path b { color: #527400; }
 .ov-api-expand-icon { display: inline-flex; align-items: center; justify-content: center; min-width: 1rem; font-size: 1.25rem; line-height: 1; transition: color .2s; }
 .ov-api-card > button[aria-expanded="true"] .ov-api-expand-icon { color: #c8f53c; }
 
+/* Endpoint discovery controls */
+.ov-api-filters { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; border: 1px solid var(--ov-docs-border); border-radius: 12px; background: var(--ov-docs-surface); padding: 14px; }
+.ov-api-filter-field { min-width: 0; }
+.ov-api-filter-field label { display: block; margin: 0 0 6px; color: var(--ov-docs-muted); font-size: .75rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.ov-api-filter-field input, .ov-api-filter-field select { width: 100%; min-height: 40px; border: 1px solid var(--ov-docs-border); border-radius: 7px; background: color-mix(in srgb, var(--ov-docs-bg) 58%, transparent); padding: 0 11px; color: var(--ov-docs-text); font: inherit; font-size: .875rem; }
+.ov-api-filter-field input::placeholder { color: var(--ov-docs-muted); opacity: .82; }
+.ov-api-filter-field input:focus, .ov-api-filter-field select:focus { border-color: #c8f53c; outline: 2px solid rgb(200 245 60 / .22); outline-offset: 1px; }
+.ov-api-filter-clear { align-self: end; min-height: 40px; border: 1px solid var(--ov-docs-border); border-radius: 7px; background: transparent; padding: 0 13px; color: var(--ov-docs-text); font-size: .8125rem; font-weight: 650; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+.ov-api-filter-clear:hover:not(:disabled) { border-color: #c8f53c; background: var(--ov-docs-surface-strong); }
+.ov-api-filter-clear:disabled { opacity: .45; cursor: not-allowed; }
+.ov-api-empty-state { border: 1px dashed var(--ov-docs-border); border-radius: 12px; padding: 28px; text-align: center; }
+.ov-api-empty-state button { margin-top: 14px; color: #c8f53c; font-size: .875rem; font-weight: 700; cursor: pointer; }
+html[data-ov-theme="light"] .ov-api-filter-field input, html[data-ov-theme="light"] .ov-api-filter-field select { background: #ffffff; }
+html[data-ov-theme="light"] .ov-api-empty-state button { color: #24590b; }
+
+@media (min-width: 640px) {
+  .ov-api-filters { grid-template-columns: minmax(0, 1fr) 140px 190px auto; align-items: end; }
+}
+
 @keyframes ov-api-expand-in {
   from { opacity: 0; transform: translateY(-10px) scaleY(.96); }
   to { opacity: 1; transform: translateY(0) scaleY(1); }
