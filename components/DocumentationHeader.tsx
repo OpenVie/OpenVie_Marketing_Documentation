@@ -3,12 +3,22 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
+import openApiDocument from "@/data/openapi.json";
+import {
+  endpointAnchorId,
+  extractEndpoints,
+  type OpenApiDocument,
+} from "@/lib/openapi";
 
-const navigation = [
+const guideLinks = [
   { href: "#getting-started", label: "Bắt đầu" },
   { href: "#authentication", label: "Xác thực" },
   { href: "#reference", label: "API Reference" },
 ];
+
+const document = openApiDocument as unknown as OpenApiDocument;
+const endpoints = extractEndpoints(document);
+const tagOrder = document.tags?.map((tag) => tag.name) ?? [];
 
 export default function DocumentationHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,7 +40,7 @@ export default function DocumentationHeader() {
 
         <div className="flex items-center gap-3">
           <nav className="hidden gap-6 text-sm text-slate-300 md:flex" aria-label="Primary navigation">
-            {navigation.map((item) => (
+            {guideLinks.map((item) => (
               <a key={item.href} href={item.href} className="hover:text-lime-300">{item.label}</a>
             ))}
           </nav>
@@ -38,7 +48,7 @@ export default function DocumentationHeader() {
           <button
             type="button"
             className="ov-menu-button md:hidden"
-            aria-label="Open navigation menu"
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
@@ -50,9 +60,41 @@ export default function DocumentationHeader() {
 
       {menuOpen && (
         <nav id="mobile-navigation" className="ov-mobile-navigation md:hidden" aria-label="Mobile navigation">
-          {navigation.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
-          ))}
+          <section className="ov-mobile-nav-section">
+            <p className="ov-mobile-nav-label">Guides</p>
+            {guideLinks.map((item) => (
+              <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
+            ))}
+          </section>
+
+          <section className="ov-mobile-nav-section">
+            <p className="ov-mobile-nav-label">Reference</p>
+            {tagOrder.map((tag, index) => {
+              const taggedEndpoints = endpoints.filter((endpoint) => endpoint.operation.tags?.includes(tag));
+              if (taggedEndpoints.length === 0) return null;
+
+              return (
+                <details key={tag} className="ov-mobile-nav-group" open={index === 0}>
+                  <summary>
+                    <span>{tag}</span>
+                    <span>{taggedEndpoints.length}</span>
+                  </summary>
+                  <div>
+                    {taggedEndpoints.map((endpoint) => (
+                      <a
+                        key={endpoint.id}
+                        href={`#${endpointAnchorId(endpoint)}`}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <span>{endpoint.operation.summary ?? "API endpoint"}</span>
+                        <small><b>{endpoint.method}</b> {endpoint.path.replace("/api/v1/", "/")}</small>
+                      </a>
+                    ))}
+                  </div>
+                </details>
+              );
+            })}
+          </section>
         </nav>
       )}
     </header>

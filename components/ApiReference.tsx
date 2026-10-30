@@ -6,6 +6,8 @@ import SchemaViewer from "@/components/SchemaViewer";
 import ParametersViewer from "@/components/ParametersViewer";
 import RequestResponseViewer from "@/components/RequestResponseViewer";
 import CodeExamples from "@/components/CodeExamples";
+import ApiPlayground from "@/components/ApiPlayground";
+import openApiDocument from "@/data/openapi.json";
 
 import {
   extractEndpoints,
@@ -17,12 +19,13 @@ import {
 } from "@/lib/openapi";
 
 type MethodFilter = "all" | HttpMethod;
+const staticDocument = openApiDocument as unknown as OpenApiDocument;
 
 export default function ApiReference() {
   const [document, setDocument] =
-    useState<OpenApiDocument | null>(null);
+    useState<OpenApiDocument | null>(staticDocument);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -82,6 +85,8 @@ export default function ApiReference() {
   const endpoints = extractEndpoints(document);
   const schemas = document.components?.schemas ?? {};
   const baseUrl = document.servers?.[0]?.url ?? "http://localhost:8080";
+  const documentedServers = document.servers?.map((server) => server.url).filter((url) => /^https?:\/\//.test(url)) ?? [];
+  const servers = documentedServers.length > 0 ? documentedServers : [baseUrl];
   const tags = Array.from(new Set([
     ...(document.tags?.map((tag) => tag.name) ?? []),
     ...endpoints.flatMap((endpoint) => endpoint.operation.tags ?? []),
@@ -222,6 +227,8 @@ export default function ApiReference() {
                   </p>
 
                   <CodeExamples endpoint={endpoint} baseUrl={baseUrl} />
+
+                  <ApiPlayground endpoint={endpoint} servers={servers} />
 
                   <section>
                     <h3 className="font-semibold">Parameters</h3>
