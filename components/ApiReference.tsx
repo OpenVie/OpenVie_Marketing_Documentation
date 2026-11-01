@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,73 +6,41 @@ import ParametersViewer from "@/components/ParametersViewer";
 import RequestResponseViewer from "@/components/RequestResponseViewer";
 import CodeExamples from "@/components/CodeExamples";
 import ApiPlayground from "@/components/ApiPlayground";
-import openApiDocument from "@/data/openapi.json";
 
 import {
-  extractEndpoints,
   endpointAnchorId,
-  HTTP_METHODS,
+  tagSlug,
   type ApiEndpoint,
   type HttpMethod,
-  type OpenApiDocument,
+  type TagGroup,
 } from "@/lib/openapi";
 
 type MethodFilter = "all" | HttpMethod;
-const staticDocument = openApiDocument as unknown as OpenApiDocument;
 
-export default function ApiReference() {
-  const [document, setDocument] =
-    useState<OpenApiDocument | null>(staticDocument);
+type Props = {
+  endpoints: ApiEndpoint[];
+  groups: TagGroup[];
+  schemas: Record<string, unknown>;
+  servers: string[];
+  baseUrl: string;
+};
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+export default function ApiReference({
+  endpoints,
+  groups,
+  schemas,
+  servers,
+  baseUrl,
+}: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [methodFilter, setMethodFilter] = useState<MethodFilter>("all");
   const [tagFilter, setTagFilter] = useState("all");
 
   useEffect(() => {
-    const controller = new AbortController();
-
-    async function loadOpenApi() {
-      try {
-        const response = await fetch("/api/openapi", {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error("Không thể tải OpenAPI.");
-        }
-
-        const data: OpenApiDocument = await response.json();
-
-        if (!data.paths || typeof data.paths !== "object") {
-          throw new Error("Tài liệu OpenAPI không hợp lệ.");
-        }
-
-        setDocument(data);
-      } catch (err) {
-        if (controller.signal.aborted) return;
-
-        setError(
-          err instanceof Error ? err.message : "Đã xảy ra lỗi."
-        );
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadOpenApi();
-
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
     const expandEndpointFromHash = () => {
       const anchor = window.location.hash.slice(1);
-      const endpoint = extractEndpoints(staticDocument).find(
+      const endpoint = endpoints.find(
         (item) => endpointAnchorId(item) === anchor,
       );
 
@@ -93,73 +60,59 @@ export default function ApiReference() {
       window.removeEventListener("hashchange", expandEndpointFromHash);
       window.removeEventListener("openvie:endpoint-selected", expandEndpointFromNavigation);
     };
-  }, []);
+  }, [endpoints]);
 
-  if (loading) {
-    return <p className="text-slate-400">Đang tải API Reference...</p>;
-  }
-
-  if (error || !document) {
-    return (
-      <p role="alert" className="text-red-400">
-        {error || "Không có dữ liệu OpenAPI."}
-      </p>
-    );
-  }
-
-  const endpoints = extractEndpoints(document);
-  const schemas = document.components?.schemas ?? {};
-  const baseUrl = document.servers?.[0]?.url ?? "http://localhost:8080";
-  const documentedServers = document.servers?.map((server) => server.url).filter((url) => /^https?:\/\//.test(url)) ?? [];
-  const servers = documentedServers.length > 0 ? documentedServers : [baseUrl];
-  const tags = Array.from(new Set([
-    ...(document.tags?.map((tag) => tag.name) ?? []),
-    ...endpoints.flatMap((endpoint) => endpoint.operation.tags ?? []),
-  ])).sort((first, second) => first.localeCompare(second));
+  const tags = Array.from(new Set(groups.map((group) => group.tag)));
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
-  const filteredEndpoints = endpoints.filter((endpoint) => {
+
+  const matches = (endpoint: ApiEndpoint): boolean => {
     const operation = endpoint.operation;
-    const matchesQuery = !normalizedQuery || [
+    const matchingQuery = !normalizedQuery || [
       endpoint.path,
       endpoint.method,
       operation.summary,
       operation.description,
     ].filter(Boolean).join(" ").toLocaleLowerCase().includes(normalizedQuery);
-    const matchesMethod = methodFilter === "all" || endpoint.method === methodFilter;
-    const matchesTag = tagFilter === "all" || operation.tags?.includes(tagFilter);
+    const matchingMethod = methodFilter === "all" || endpoint.method === methodFilter;
 
-    return matchesQuery && matchesMethod && matchesTag;
-  });
+    return matchingQuery && matchingMethod;
+  };
+
+  const filteredGroups: TagGroup[] = groups
+    .map((group) => ({
+      ...group,
+      endpoints: group.endpoints.filter((endpoint) => matches(endpoint)),
+    }))
+    .filter(
+      (group) => group.endpoints.length > 0 &&
+        (tagFilter === "all" || group.tag === tagFilter),
+    );
+
+  const filteredCount = filteredGroups.reduce(
+    (count, group) => count + group.endpoints.length,
+    0,
+  );
   const hasActiveFilters = searchQuery.length > 0 || methodFilter !== "all" || tagFilter !== "all";
-
-  function clearFilters() {
-    setSearchQuery("");
-    setMethodFilter("all");
-    setTagFilter("all");
-  }
 
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-bold">API Reference</h2>
-        <p className="mt-2 text-slate-400">
-          {document.info.title} · OpenAPI {document.openapi}
-        </p>
-        <p className="mt-2 text-sm text-cyan-400">
-          {endpoints.length} endpoints ·{" "}
-          {Object.keys(schemas).length} schemas
+        <h2 className="text-3xl font-bold tracking-tight">API Reference</h2>
+        <p className="ov-reference-meta">
+          {endpoints.length} endpoint · {Object.keys(schemas).length} schema ·
+          nguồn api-docs.json trong repo
         </p>
       </div>
 
       <section className="ov-api-filters" aria-label="Filter API endpoints">
         <div className="ov-api-filter-field ov-api-filter-search">
-          <label htmlFor="endpoint-search">Search endpoints</label>
+          <label htmlFor="endpoint-search">Tìm kiếm endpoint</label>
           <input
             id="endpoint-search"
             type="search"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Path, method, or description"
+            placeholder="Path, method, hoặc mô tả"
           />
         </div>
 
@@ -171,20 +124,20 @@ export default function ApiReference() {
             onChange={(event) => setMethodFilter(event.target.value as MethodFilter)}
           >
             <option value="all">All methods</option>
-            {HTTP_METHODS.map((method) => (
+            {(["get", "post", "put", "patch", "delete"] as HttpMethod[]).map((method) => (
               <option key={method} value={method}>{method.toUpperCase()}</option>
             ))}
           </select>
         </div>
 
         <div className="ov-api-filter-field">
-          <label htmlFor="endpoint-tag">Tag</label>
+          <label htmlFor="endpoint-tag">Nhóm</label>
           <select
             id="endpoint-tag"
             value={tagFilter}
             onChange={(event) => setTagFilter(event.target.value)}
           >
-            <option value="all">All tags</option>
+            <option value="all">Tất cả nhóm</option>
             {tags.map((tag) => <option key={tag} value={tag}>{tag}</option>)}
           </select>
         </div>
@@ -192,114 +145,127 @@ export default function ApiReference() {
         <button
           type="button"
           className="ov-api-filter-clear"
-          onClick={clearFilters}
+          onClick={() => {
+            setSearchQuery("");
+            setMethodFilter("all");
+            setTagFilter("all");
+          }}
           disabled={!hasActiveFilters}
         >
-          Clear filters
+          Xoá lọc
         </button>
       </section>
 
-      <p className="text-sm text-slate-400" role="status">
-        Showing {filteredEndpoints.length} of {endpoints.length} endpoints
+      <p className="ov-reference-count" role="status">
+        Hiển thị {filteredCount} / {endpoints.length} endpoint{hasActiveFilters ? " (lọc đang bật)" : ""}
       </p>
 
-      <div className="space-y-3">
-        {filteredEndpoints.map((endpoint: ApiEndpoint) => {
-          const expanded = selectedId === endpoint.id;
-          const operation = endpoint.operation;
+      {filteredGroups.map((group) => {
+        const groupAnchor = `group-${tagSlug(group.tag)}`;
+        return (
+        <section key={group.tag} className="ov-api-group" aria-labelledby={groupAnchor}>
+          <h2 id={groupAnchor} className="ov-api-group-title">
+            {group.tag}
+            <span className="ov-api-group-count">{group.endpoints.length}</span>
+          </h2>
 
-          return (
-            <article
-              key={endpoint.id}
-              id={endpointAnchorId(endpoint)}
-              className="ov-api-card scroll-mt-24 overflow-hidden rounded-xl border border-slate-800 bg-slate-900"
-            >
-              <button
-                type="button"
-                aria-expanded={expanded}
-                onClick={() =>
-                  setSelectedId(expanded ? null : endpoint.id)
-                }
-                className="flex w-full flex-wrap items-center gap-3 p-5 text-left hover:bg-slate-800"
-              >
-                <span className="rounded bg-cyan-400/10 px-3 py-1 text-xs font-bold uppercase text-cyan-400">
-                  {endpoint.method}
-                </span>
+          <div className="space-y-3">
+            {group.endpoints.map((endpoint: ApiEndpoint) => {
+              const expanded = selectedId === endpoint.id;
+              const operation = endpoint.operation;
 
-                <code className="break-all text-sm">
-                  {endpoint.path}
-                </code>
+              return (
+                <article
+                  key={endpoint.id}
+                  id={endpointAnchorId(endpoint)}
+                  className="ov-api-card"
+                >
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    onClick={() => setSelectedId(expanded ? null : endpoint.id)}
+                    className="ov-api-card-head"
+                  >
+                    <span className={`ov-method-chip ov-method-${endpoint.method}`}>
+                      {endpoint.method.toUpperCase()}
+                    </span>
 
-                <span className="text-sm text-slate-400">
-                  {operation.summary ?? "No summary"}
-                </span>
+                    <code className="ov-api-card-path">{endpoint.path}</code>
+                    <span className="ov-api-card-summary">
+                      {operation.summary ?? "—"}
+                    </span>
 
-                <span className="ov-api-expand-icon ml-auto text-slate-400" aria-hidden="true">
-                  {expanded ? "−" : "+"}
-                </span>
-              </button>
+                    <span className="ov-api-expand-icon" aria-hidden="true">
+                      {expanded ? "−" : "+"}
+                    </span>
+                  </button>
 
-              {expanded && (
-                <div className="ov-api-expand space-y-5 border-t border-slate-800 p-5">
-                  <p className="text-slate-300">
-                    {operation.description ??
-                      operation.summary ??
-                      "Không có mô tả."}
-                  </p>
+                  {expanded && (
+                    <div className="ov-api-expand space-y-5 p-5 border-t ov-op-border">
+                      <p className="ov-operation-description">
+                        {operation.description ?? operation.summary ?? "Không có mô tả."}
+                      </p>
 
-                  <p className="text-sm text-slate-400">
-                    Nhóm: {operation.tags?.join(", ") ?? "Không xác định"}
-                  </p>
+                      {operation.tags?.length ? (
+                        <p className="ov-reference-count">
+                          {`Nhóm: ${operation.tags.join(" · ")}`}
+                        </p>
+                      ) : null}
 
-                  <CodeExamples endpoint={endpoint} baseUrl={baseUrl} />
+                      <CodeExamples endpoint={endpoint} baseUrl={baseUrl} schemas={schemas} />
 
-                  <ApiPlayground endpoint={endpoint} servers={servers} />
+                      <ApiPlayground endpoint={endpoint} servers={servers} schemas={schemas} />
 
-                  <section>
-                    <h3 className="font-semibold">Parameters</h3>
-                    <ParametersViewer parameters={operation.parameters ?? []} />
-                  </section>
+                      <section>
+                        <h3 className="ov-viewer-title">Params</h3>
+                        <ParametersViewer parameters={operation.parameters ?? []} />
+                      </section>
 
-                  <RequestResponseViewer
-                    requestBody={operation.requestBody}
-                    responses={operation.responses}
-                    schemas={schemas}
-                  />
-                </div>
-              )}
-            </article>
-          );
-        })}
-
-        {filteredEndpoints.length === 0 && (
-          <div className="ov-api-empty-state" role="status">
-            <p className="font-semibold">No endpoints found</p>
-            <p className="mt-1 text-sm text-slate-400">Try another keyword, HTTP method, or tag.</p>
-            <button type="button" onClick={clearFilters}>Clear filters</button>
+                      <RequestResponseViewer
+                        requestBody={operation.requestBody}
+                        responses={operation.responses}
+                        schemas={schemas}
+                      />
+                    </div>
+                  )}
+                </article>
+              );
+            })}
           </div>
-        )}
-      </div>
+        </section>
+        );
+      })}
+
+      {filteredCount === 0 && (
+        <div className="ov-api-empty-state" role="status">
+          <p className="font-semibold">Không tìm thấy endpoint</p>
+          <p className="ov-viewer-note">Thử từ khoá, method, hoặc nhóm khác.</p>
+          <button type="button" onClick={() => {
+            setSearchQuery("");
+            setMethodFilter("all");
+            setTagFilter("all");
+          }}>
+            Xoá lọc
+          </button>
+        </div>
+      )}
 
       <section>
-        <h2 className="text-2xl font-bold">Schemas</h2>
-        <p className="mt-2 text-slate-400">
-          Các cấu trúc dữ liệu được định nghĩa trong OpenAPI.
+        <h2 className="text-2xl font-bold tracking-tight">Schemas</h2>
+        <p className="ov-reference-meta">
+          Cấu trúc dữ liệu được định nghĩa trong OpenAPI — mỗi schema có JSON
+          mẫu sinh tự động.
         </p>
 
         <div className="mt-4 space-y-3">
           {Object.entries(schemas).map(([name, schema]) => (
-            <details
-              key={name}
-              className="ov-api-card rounded-lg border border-slate-800 bg-slate-900 p-4"
-            >
-              <summary className="cursor-pointer font-medium text-cyan-400">
+            <details key={name} className="ov-api-card px-4 py-3">
+              <summary className="cursor-pointer font-medium ov-reference-link">
                 {name}
               </summary>
-              <SchemaViewer
-                name={name}
-                schema={schema}
-                schemas={schemas}
-              />
+              <div className="mt-3">
+                <SchemaViewer name={name} schema={schema} schemas={schemas} />
+              </div>
             </details>
           ))}
         </div>

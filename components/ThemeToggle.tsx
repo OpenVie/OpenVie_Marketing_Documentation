@@ -10,8 +10,8 @@ type ViewTransitionDocument = Document & {
 };
 
 function storedTheme(): Theme {
-  if (typeof window === "undefined") return "light";
-  return window.localStorage.getItem("openvie.theme") === "dark" ? "dark" : "light";
+  if (typeof window === "undefined") return "dark";
+  return window.localStorage.getItem("openvie.theme") === "light" ? "light" : "dark";
 }
 
 function transitionTheme(update: () => void) {
@@ -43,8 +43,8 @@ function applyTheme(theme: Theme, notify = false) {
 }
 
 export default function ThemeToggle() {
-  // The first client render must match the server-rendered light theme.
-  const [theme, setTheme] = useState<Theme>("light");
+  // The first client render must match the server-rendered dark theme.
+  const [theme, setTheme] = useState<Theme>("dark");
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {

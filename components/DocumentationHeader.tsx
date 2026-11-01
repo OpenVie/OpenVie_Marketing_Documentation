@@ -1,26 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
-import openApiDocument from "@/data/openapi.json";
-import {
-  endpointAnchorId,
-  extractEndpoints,
-  type OpenApiDocument,
-} from "@/lib/openapi";
 
-const guideLinks = [
-  { href: "#getting-started", label: "Bắt đầu" },
-  { href: "#authentication", label: "Xác thực" },
-  { href: "#reference", label: "API Reference" },
-];
+export interface GuideLink {
+  href: string;
+  label: string;
+}
 
-const document = openApiDocument as unknown as OpenApiDocument;
-const endpoints = extractEndpoints(document);
-const tagOrder = document.tags?.map((tag) => tag.name) ?? [];
-
-export default function DocumentationHeader() {
+export default function DocumentationHeader({
+  guides,
+  locale = "vi",
+}: {
+  guides: GuideLink[];
+  locale?: "vi" | "en";
+}) {
+  const isEn = locale === "en";
+  const homeHref = isEn ? "/en" : "/";
+  const blogHref = isEn ? "/en/blog" : "/blog";
+  const staticLinks = [
+    { href: homeHref, label: isEn ? "Home" : "Trang chủ" },
+    { href: blogHref, label: "Blog" },
+  ];
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -32,17 +35,54 @@ export default function DocumentationHeader() {
   }, []);
 
   return (
-    <header className="ov-docs-header sticky top-0 z-30 border-b border-slate-800">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          OpenVie <span className="text-lime-300">API</span>
+    <header className="ov-docs-header sticky top-0 z-30">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
+        <Link href={homeHref} className="ov-docs-brand" aria-label={isEn ? "OpenVie — home" : "OpenVie — về trang chủ"}>
+          <Image
+            src="/logo.png"
+            alt="OpenVie logo"
+            width={22}
+            height={22}
+            className="h-[22px] w-[22px] rounded-[6px]"
+          />
+          <span className="ov-brand-name">OpenVie<em>API</em></span>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <nav className="hidden gap-6 text-sm text-slate-300 md:flex" aria-label="Primary navigation">
-            {guideLinks.map((item) => (
-              <a key={item.href} href={item.href} className="hover:text-lime-300">{item.label}</a>
+        <div className="flex items-center gap-2">
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+            {guides.map((item) => (
+              <a key={item.href} href={item.href} className="ov-docs-navlink">{item.label}</a>
             ))}
+            {staticLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="ov-docs-navlink">{link.label}</Link>
+            ))}
+          </nav>
+          <nav
+            className="inline-flex rounded-full border border-[var(--ov-docs-border)] bg-[var(--ov-docs-surface)] p-0.5 text-xs font-bold"
+            aria-label={isEn ? "Language" : "Ngôn ngữ"}
+          >
+            <Link
+              href="/docs"
+              aria-current={locale === "vi" ? "true" : undefined}
+              className={`rounded-full px-2.5 py-1 transition ${
+                locale === "vi"
+                  ? "bg-[var(--ov-docs-accent)] text-[var(--ov-docs-accent-ink)] font-bold shadow-sm"
+                  : "text-[var(--ov-docs-muted)] hover:text-[var(--ov-docs-text)]"
+              }`}
+            >
+              VI
+            </Link>
+            <Link
+              href="/en/docs"
+              aria-current={locale === "en" ? "true" : undefined}
+              className={`rounded-full px-2.5 py-1 transition ${
+                locale === "en"
+                  ? "bg-[var(--ov-docs-accent)] text-[var(--ov-docs-accent-ink)] font-bold shadow-sm"
+                  : "text-[var(--ov-docs-muted)] hover:text-[var(--ov-docs-text)]"
+              }`}
+            >
+              EN
+            </Link>
           </nav>
           <ThemeToggle />
           <button
@@ -61,46 +101,20 @@ export default function DocumentationHeader() {
       {menuOpen && (
         <nav id="mobile-navigation" className="ov-mobile-navigation md:hidden" aria-label="Mobile navigation">
           <section className="ov-mobile-nav-section">
-            <p className="ov-mobile-nav-label">Guides</p>
-            {guideLinks.map((item) => (
+            <p className="ov-mobile-nav-label">{isEn ? "Guides" : "Hướng dẫn"}</p>
+            {guides.map((item) => (
               <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
             ))}
-          </section>
-
-          <section className="ov-mobile-nav-section">
-            <p className="ov-mobile-nav-label">Reference</p>
-            {tagOrder.map((tag, index) => {
-              const taggedEndpoints = endpoints.filter((endpoint) => endpoint.operation.tags?.includes(tag));
-              if (taggedEndpoints.length === 0) return null;
-
-              return (
-                <details key={tag} className="ov-mobile-nav-group" open={index === 0}>
-                  <summary>
-                    <span>
-                      <strong className="ov-mobile-nav-count">{taggedEndpoints.length}</strong>
-                      {tag}
-                    </span>
-                  </summary>
-                  <div>
-                    {taggedEndpoints.map((endpoint) => (
-                      <a
-                        key={endpoint.id}
-                        href={`#${endpointAnchorId(endpoint)}`}
-                        onClick={() => {
-                          setMenuOpen(false);
-                          window.dispatchEvent(
-                            new CustomEvent("openvie:endpoint-selected", { detail: endpoint.id }),
-                          );
-                        }}
-                      >
-                        <span>{endpoint.operation.summary ?? "API endpoint"}</span>
-                        <small><b>{endpoint.method}</b> {endpoint.path.replace("/api/v1/", "/")}</small>
-                      </a>
-                    ))}
-                  </div>
-                </details>
-              );
-            })}
+            {staticLinks.map((link) => (
+              <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
+            ))}
+            <div className="pt-3 mt-3 border-t border-[var(--ov-docs-border)] flex items-center justify-between">
+              <span className="text-xs text-[var(--ov-docs-muted)] font-medium">{isEn ? "Language" : "Ngôn ngữ"}</span>
+              <div className="inline-flex rounded-full border border-[var(--ov-docs-border)] bg-[var(--ov-docs-surface)] p-0.5 text-xs font-bold">
+                <Link href="/docs" className={`rounded-full px-2.5 py-1 ${locale === "vi" ? "bg-[var(--ov-docs-accent)] text-[var(--ov-docs-accent-ink)] font-bold" : "text-[var(--ov-docs-muted)]"}`}>VI</Link>
+                <Link href="/en/docs" className={`rounded-full px-2.5 py-1 ${locale === "en" ? "bg-[var(--ov-docs-accent)] text-[var(--ov-docs-accent-ink)] font-bold" : "text-[var(--ov-docs-muted)]"}`}>EN</Link>
+              </div>
+            </div>
           </section>
         </nav>
       )}
