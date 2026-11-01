@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import type { ApiEndpoint } from "@/lib/openapi";
+import type { ApiEndpoint, OpenApiOperation } from "@/lib/openapi";
+import { sampleRequestBody } from "@/lib/mock";
 
 type ExampleLanguage = "curl" | "javascript";
 
 function SyntaxCode({ code, language }: { code: string; language: ExampleLanguage }) {
   const tokenPattern = language === "javascript"
     ? /("[^"\n]*"|'[^'\n]*'|\b(?:const|await)\b|\b(?:fetch|json)\b|\b(?:method|headers|body)\b)/g
-    : /("[^"\n]*"|'[^'\n]*'|\b(?:curl|--request|--url|--header|--data)\b)/g;
+    : /("[^"\n]*"|'[^"\n]*'|\b(?:curl|--request|--url|--header|--data)\b)/g;
 
   return code.split(tokenPattern).map((token, index) => {
     if (!token) return null;
@@ -35,7 +36,21 @@ function endpointUrl(baseUrl: string, path: string) {
   return `${baseUrl.replace(/\/$/, "")}${path}`;
 }
 
-function curlExample(endpoint: ApiEndpoint, baseUrl: string) {
+function requestBodyPlaceholder(operation: OpenApiOperation, schemas: Record<string, unknown>) {
+  if (!hasJsonRequestBody(operation.requestBody)) return "{}";
+  try {
+    return sampleRequestBody(operation, { schemas }) ?? "{}";
+  } catch {
+    return "{}";
+  }
+}
+
+function curlExample(
+  endpoint: ApiEndpoint,
+  baseUrl: string,
+  schemas: Record<string, unknown>,
+  bodySample: string,
+) {
   const url = endpointUrl(baseUrl, endpoint.path);
   const needsAuth = Boolean(endpoint.operation.security?.length);
   const hasBody = hasJsonRequestBody(endpoint.operation.requestBody);
@@ -50,13 +65,18 @@ function curlExample(endpoint: ApiEndpoint, baseUrl: string) {
   }
   if (hasBody) {
     lines.push("  --header \"Content-Type: application/json\" \\");
-    lines.push("  --data '{}'");
+    lines.push(`  --data '${bodySample.replace(/\n\s*/g, " ")}'`);
   }
 
   return lines.join("\n");
 }
 
-function javascriptExample(endpoint: ApiEndpoint, baseUrl: string) {
+function javascriptExample(
+  endpoint: ApiEndpoint,
+  baseUrl: string,
+  schemas: Record<string, unknown>,
+  bodySample: string,
+) {
   const url = endpointUrl(baseUrl, endpoint.path);
   const needsAuth = Boolean(endpoint.operation.security?.length);
   const hasBody = hasJsonRequestBody(endpoint.operation.requestBody);
@@ -67,7 +87,7 @@ function javascriptExample(endpoint: ApiEndpoint, baseUrl: string) {
   const options = [
     `  method: "${endpoint.method.toUpperCase()}"`,
     ...(headers.length > 0 ? [`  headers: { ${headers.join(", ")} }`] : []),
-    ...(hasBody ? ["  body: JSON.stringify({})"] : []),
+    ...(hasBody ? [`  body: JSON.stringify(${bodySample.replace(/\n\s*/g, " ")})`] : []),
   ];
 
   return [
@@ -100,15 +120,19 @@ async function copyText(text: string) {
 export default function CodeExamples({
   endpoint,
   baseUrl,
+  schemas,
 }: {
   endpoint: ApiEndpoint;
   baseUrl: string;
+  schemas: Record<string, unknown>;
 }) {
   const [language, setLanguage] = useState<ExampleLanguage>("curl");
   const [copied, setCopied] = useState(false);
+
+  const bodySample = requestBodyPlaceholder(endpoint.operation, schemas);
   const examples = {
-    curl: curlExample(endpoint, baseUrl),
-    javascript: javascriptExample(endpoint, baseUrl),
+    curl: curlExample(endpoint, baseUrl, schemas, bodySample),
+    javascript: javascriptExample(endpoint, baseUrl, schemas, bodySample),
   };
   const code = examples[language];
 
@@ -127,10 +151,10 @@ export default function CodeExamples({
       <div className="ov-code-examples-header">
         <div>
           <h3 id={`example-${endpoint.id}`} className="font-semibold">Code examples</h3>
-          <p className="mt-1 text-sm text-slate-400">Replace placeholder values before sending the request.</p>
+          <p className="ov-viewer-note">Thay giá trị placeholder trước khi gửi request thật.</p>
         </div>
         <button type="button" className="ov-code-copy" onClick={copyExample}>
-          {copied ? "Copied" : "Copy"}
+          {copied ? "Đã copy" : "Copy"}
         </button>
       </div>
 

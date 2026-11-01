@@ -1,27 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import openApiDocument from "@/data/openapi.json";
 import {
   endpointAnchorId,
-  extractEndpoints,
+  shortPath,
   type ApiEndpoint,
-  type OpenApiDocument,
+  type TagGroup,
 } from "@/lib/openapi";
+import type { GuideLink } from "@/components/DocumentationHeader";
 
-const guideLinks = [
-  { href: "#main-content", label: "Overview" },
-  { href: "#getting-started", label: "Getting started" },
-  { href: "#authentication", label: "Authentication" },
-];
-
-const document = openApiDocument as unknown as OpenApiDocument;
-const endpoints = extractEndpoints(document);
-const tagOrder = document.tags?.map((tag) => tag.name) ?? [];
-
-function endpointsForTag(tag: string) {
-  return endpoints.filter((endpoint) => endpoint.operation.tags?.includes(tag));
-}
+type Props = {
+  guides: GuideLink[];
+  groups: TagGroup[];
+  locale?: "vi" | "en";
+};
 
 function EndpointLink({ endpoint }: { endpoint: ApiEndpoint }) {
   return (
@@ -36,45 +29,56 @@ function EndpointLink({ endpoint }: { endpoint: ApiEndpoint }) {
     >
       <span className="ov-api-nav-copy">
         <span className="ov-api-nav-summary">{endpoint.operation.summary ?? "API endpoint"}</span>
-        <span className="ov-api-nav-path"><b>{endpoint.method}</b> {endpoint.path.replace("/api/v1/", "/")}</span>
+        <span className="ov-api-nav-path">
+          <b>{endpoint.method}</b> {shortPath(endpoint.path)}
+        </span>
       </span>
     </a>
   );
 }
 
-export default function DocumentationSidebar() {
-  const [openTag, setOpenTag] = useState<string | null>(tagOrder[0] ?? null);
+export default function DocumentationSidebar({ guides, groups, locale = "vi" }: Props) {
+  const isEn = locale === "en";
+  const [openTag, setOpenTag] = useState<string | null>(groups[0]?.tag ?? null);
 
   return (
     <aside className="ov-docs-sidebar hidden lg:block">
       <nav aria-label="Documentation navigation">
-        <p className="ov-sidebar-label">Guides</p>
-        <ul className="space-y-1">
-          {guideLinks.map((item) => (
+        <div className="ov-sidebar-product">
+          <span aria-hidden="true" />
+          Documentation
+        </div>
+
+        <p className="ov-sidebar-label">{isEn ? "Guides" : "Hướng dẫn"}</p>
+        <ul className="space-y-0.5">
+          {guides.map((item) => (
             <li key={item.href}><a href={item.href}>{item.label}</a></li>
           ))}
+          <li><Link href={isEn ? "/en" : "/"}>{isEn ? "Home" : "Trang chủ"}</Link></li>
+          <li><Link href={isEn ? "/en/blog" : "/blog"}>Blog</Link></li>
         </ul>
 
-        <p className="ov-sidebar-label mt-10">Reference</p>
-        <div className="space-y-1">
-          {tagOrder.map((tag) => {
-            const taggedEndpoints = endpointsForTag(tag);
-            if (taggedEndpoints.length === 0) return null;
-            const isOpen = openTag === tag;
+        <p className="ov-sidebar-label mt-8">API Reference</p>
+        <div className="space-y-0.5">
+          {groups.map((group) => {
+            const isOpen = openTag === group.tag;
 
             return (
-              <section key={tag} className="ov-api-nav-group">
+              <section key={group.tag} className="ov-api-nav-group">
                 <button
                   type="button"
                   aria-expanded={isOpen}
                   className="ov-api-nav-trigger"
-                  onClick={() => setOpenTag(isOpen ? null : tag)}
+                  onClick={() => setOpenTag(isOpen ? null : group.tag)}
                 >
-                  <span>{tag}</span>
+                  <span>{group.tag}</span>
+                  <span>{group.endpoints.length}</span>
                 </button>
                 {isOpen && (
                   <div className="ov-api-nav-list">
-                    {taggedEndpoints.map((endpoint) => <EndpointLink key={endpoint.id} endpoint={endpoint} />)}
+                    {group.endpoints.map((endpoint) => (
+                      <EndpointLink key={endpoint.id} endpoint={endpoint} />
+                    ))}
                   </div>
                 )}
               </section>
