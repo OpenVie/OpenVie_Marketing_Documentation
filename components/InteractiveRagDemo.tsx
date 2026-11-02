@@ -171,8 +171,8 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
             onClick={() => setActiveCitationId(isSelected ? null : citationId)}
             className={`inline-flex items-center px-2 py-0.5 mx-1 rounded text-xs font-black transition-all duration-200 ${
               isSelected
-                ? "bg-[#c8f03a] text-[#0b1a0f] shadow-[0_0_14px_rgba(200,240,58,0.6)] scale-105 ring-2 ring-[#c8f03a]"
-                : "bg-[#c8f03a]/15 text-[#c8f03a] border border-[#c8f03a]/40 hover:bg-[#c8f03a]/30"
+                ? "bg-[#1FB6FF] text-[#082F49] shadow-[0_0_14px_rgba(31,182,255,0.6)] scale-105 ring-2 ring-[#1FB6FF]"
+                : "bg-[#1FB6FF]/15 text-[#1FB6FF] border border-[#1FB6FF]/40 hover:bg-[#1FB6FF]/30"
             }`}
             title={isVi ? `Xem trích dẫn nguồn ${citationId}` : `View citation ${citationId}`}
           >
@@ -187,17 +187,17 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
   const selectedCitation = scenario.citations.find((c) => c.id === activeCitationId);
 
   return (
-    <div className="w-full rounded-2xl border border-white/10 bg-[#080d09]/90 backdrop-blur-xl shadow-2xl overflow-hidden ring-1 ring-white/5">
+    <div className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/90 backdrop-blur-xl shadow-2xl overflow-hidden ring-1 ring-white/5">
       {/* Header Bar with Mac style window dots */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-[#0b140d]/80 px-5 py-3.5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-[#0F172A]/80 px-5 py-3.5">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5" aria-hidden="true">
             <span className="h-3 w-3 rounded-full bg-red-500/80 inline-block" />
             <span className="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
-            <span className="h-3 w-3 rounded-full bg-[#c8f03a] inline-block shadow-[0_0_8px_rgba(200,240,58,0.5)]" />
+            <span className="h-3 w-3 rounded-full bg-[#1FB6FF] inline-block shadow-[0_0_8px_rgba(31,182,255,0.5)]" />
           </div>
           <span className="text-xs font-semibold text-slate-300 flex items-center gap-2">
-            <span className="inline-block h-2 w-2 rounded-full bg-[#c8f03a] animate-pulse" />
+            <span className="inline-block h-2 w-2 rounded-full bg-[#1FB6FF] animate-pulse" />
             {isVi ? "Trải nghiệm Tương tác RAG — Luồng Truy hồi & Trích dẫn Thực tế" : "Interactive RAG Showcase — Live Retrieval & Citation Flow"}
           </span>
         </div>
@@ -209,7 +209,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
               onClick={() => setViewMode("visual")}
               className={`px-3 py-1 rounded-md font-medium transition ${
                 viewMode === "visual"
-                  ? "bg-[#c8f03a] text-[#0b1a0f] font-bold shadow-sm"
+                  ? "bg-[#1FB6FF] text-[#082F49] font-bold shadow-sm"
                   : "text-slate-400 hover:text-white"
               }`}
             >
@@ -220,7 +220,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
               onClick={() => setViewMode("json")}
               className={`px-3 py-1 rounded-md font-medium transition ${
                 viewMode === "json"
-                  ? "bg-[#c8f03a] text-[#0b1a0f] font-bold shadow-sm"
+                  ? "bg-[#1FB6FF] text-[#082F49] font-bold shadow-sm"
                   : "text-slate-400 hover:text-white"
               }`}
             >
@@ -239,7 +239,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
       </div>
 
       {/* Scenario Selector Pills */}
-      <div className="border-b border-white/10 bg-[#0a120c]/60 p-4">
+      <div className="border-b border-white/10 bg-[#0F172A]/60 p-4">
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">
           {isVi ? "Chọn kịch bản nghiệp vụ để kiểm tra:" : "Select a business scenario to inspect:"}
         </p>
@@ -256,7 +256,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
                 }}
                 className={`text-left p-3 rounded-xl border transition-all text-xs flex flex-col justify-between ${
                   isSelected
-                    ? "bg-[#c8f03a]/15 border-[#c8f03a]/70 text-white shadow-lg shadow-[#c8f03a]/10 ring-1 ring-[#c8f03a]/40"
+                    ? "bg-[#1FB6FF]/15 border-[#1FB6FF]/70 text-white shadow-lg shadow-[#1FB6FF]/10 ring-1 ring-[#1FB6FF]/40"
                     : "bg-black/30 border-white/5 text-slate-400 hover:border-white/15 hover:text-slate-200"
                 }`}
               >
@@ -265,12 +265,12 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
                     className={`font-semibold text-[11px] uppercase tracking-wide px-1.5 py-0.5 rounded ${
                       item.isAbstention
                         ? "bg-amber-500/20 text-amber-300"
-                        : "bg-[#c8f03a]/20 text-[#c8f03a]"
+                        : "bg-[#1FB6FF]/20 text-[#1FB6FF]"
                     }`}
                   >
                     {item.category}
                   </span>
-                  {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-[#c8f03a] shadow-[0_0_6px_#c8f03a]" />}
+                  {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-[#1FB6FF] shadow-[0_0_6px_#1FB6FF]" />}
                 </div>
                 <p className="line-clamp-2 font-medium mt-1 text-slate-200">
                   {isVi ? item.question : item.questionEn}
@@ -282,12 +282,12 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
       </div>
 
       {/* Pipeline Status Indicator */}
-      <div className="bg-[#0b140d]/70 border-b border-white/5 px-5 py-3">
+      <div className="bg-[#0F172A]/70 border-b border-white/5 px-5 py-3">
         <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
           <span className="font-semibold text-slate-300">
             {isVi ? "Các tầng xử lý thời gian thực:" : "Real-time Processing Stages:"}
           </span>
-          <span className="text-[11px] text-[#c8f03a] font-mono font-bold">TTFT &lt; 45ms • 100% On-Premise Sovereign</span>
+          <span className="text-[11px] text-[#1FB6FF] font-mono font-bold">TTFT &lt; 45ms • 100% On-Premise Sovereign</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
           {scenario.pipelineStages.map((stage, idx) => (
@@ -301,7 +301,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
             >
               <span
                 className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
-                  stage.status === "warning" ? "bg-amber-500/20 text-amber-300" : "bg-[#c8f03a]/20 text-[#c8f03a]"
+                  stage.status === "warning" ? "bg-amber-500/20 text-amber-300" : "bg-[#1FB6FF]/20 text-[#1FB6FF]"
                 }`}
               >
                 {stage.status === "warning" ? "!" : "✓"}
@@ -323,8 +323,8 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
               {isVi ? "Câu hỏi của người dùng:" : "User Query:"}
             </span>
-            <div className="bg-[#0b140d] border border-white/10 rounded-xl p-3.5 text-sm font-semibold text-white flex items-center gap-2">
-              <span className="text-[#c8f03a] font-mono font-bold">Q:</span>
+            <div className="bg-[#0F172A] border border-white/10 rounded-xl p-3.5 text-sm font-semibold text-white flex items-center gap-2">
+              <span className="text-[#1FB6FF] font-mono font-bold">Q:</span>
               <span>{isVi ? scenario.question : scenario.questionEn}</span>
             </div>
           </div>
@@ -335,7 +335,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
                 {isVi ? "Phản hồi có kiểm chứng từ OpenVie:" : "Verified Response from OpenVie:"}
               </span>
               {scenario.citations.length > 0 && (
-                <span className="text-[11px] text-[#c8f03a]">
+                <span className="text-[11px] text-[#1FB6FF]">
                   {isVi ? "Nhấp vào [S1], [S2] để xem nguồn tài liệu" : "Click [S1], [S2] to inspect sources"}
                 </span>
               )}
@@ -346,13 +346,13 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
                 className={`rounded-xl border p-4 text-sm leading-relaxed ${
                   scenario.isAbstention
                     ? "bg-amber-950/20 border-amber-500/30 text-amber-100"
-                    : "bg-[#0b140d]/80 border-white/10 text-slate-200"
+                    : "bg-[#0F172A]/80 border-white/10 text-slate-200"
                 }`}
               >
                 {renderFormattedAnswer(isVi ? scenario.answerVi : scenario.answerEn)}
               </div>
             ) : (
-              <div className="rounded-xl border border-white/10 bg-black/90 p-3.5 font-mono text-xs text-[#c8f03a] overflow-x-auto max-h-56 custom-scrollbar">
+              <div className="rounded-xl border border-white/10 bg-black/90 p-3.5 font-mono text-xs text-[#1FB6FF] overflow-x-auto max-h-56 custom-scrollbar">
                 <pre>{JSON.stringify(
                   {
                     event: "message.completed",
@@ -387,14 +387,14 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
               <span className="text-slate-500 font-mono text-[10px]">{scenario.citations.length} nguồn</span>
             </span>
 
-            <div className="flex-1 bg-[#0b140d]/80 border border-white/10 rounded-xl p-3.5 flex flex-col justify-between">
+            <div className="flex-1 bg-[#0F172A]/80 border border-white/10 rounded-xl p-3.5 flex flex-col justify-between">
               {selectedCitation ? (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#c8f03a] text-[#0b1a0f] text-xs font-black shadow-sm">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#1FB6FF] text-[#082F49] text-xs font-black shadow-sm">
                       [{selectedCitation.id}]
                     </span>
-                    <span className="text-[11px] font-mono text-[#c8f03a] font-bold">
+                    <span className="text-[11px] font-mono text-[#1FB6FF] font-bold">
                       {selectedCitation.confidence}% khớp
                     </span>
                   </div>
@@ -406,7 +406,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
                     <span className="text-[11px] text-slate-400">Trang: {selectedCitation.page} • Định dạng: PDF/DOCX</span>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-black/40 border border-white/5 text-xs text-slate-300 italic border-l-2 border-l-[#c8f03a]">
+                  <div className="p-2.5 rounded-lg bg-black/40 border border-white/5 text-xs text-slate-300 italic border-l-2 border-l-[#1FB6FF]">
                     &ldquo;{selectedCitation.excerpt}&rdquo;
                   </div>
 
@@ -431,7 +431,7 @@ export default function InteractiveRagDemo({ locale = "vi" }: { locale?: "vi" | 
                         key={c.id}
                         type="button"
                         onClick={() => setActiveCitationId(c.id)}
-                        className="px-2.5 py-1 text-xs rounded bg-white/5 hover:bg-white/10 text-[#c8f03a] border border-[#c8f03a]/30 font-bold"
+                        className="px-2.5 py-1 text-xs rounded bg-white/5 hover:bg-white/10 text-[#1FB6FF] border border-[#1FB6FF]/30 font-bold"
                       >
                         Mở [{c.id}]
                       </button>

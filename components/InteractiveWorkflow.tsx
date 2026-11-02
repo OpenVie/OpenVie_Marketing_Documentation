@@ -49,10 +49,10 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
   ];
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#080d09]/90 backdrop-blur-xl p-5 md:p-6 shadow-2xl ring-1 ring-white/5">
+    <div className="rounded-2xl border border-white/10 bg-[#0F172A]/90 backdrop-blur-xl p-5 md:p-6 shadow-2xl ring-1 ring-white/5">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4 mb-6">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#c8f03a]">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#1FB6FF]">
             {isVi ? "Quy trình e-Office chuẩn BPMN nhúng" : "Embedded BPMN e-Office Workflow"}
           </span>
           <h3 className="text-lg font-bold text-white mt-0.5">
@@ -67,7 +67,7 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
             onClick={() => setSimulationState("approved")}
             className={`px-3 py-1 rounded-lg font-bold transition ${
               simulationState === "approved"
-                ? "bg-[#c8f03a] text-[#0b1a0f] shadow-md shadow-[#c8f03a]/30"
+                ? "bg-[#1FB6FF] text-[#082F49] shadow-md shadow-[#1FB6FF]/30"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -108,12 +108,12 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
                 ? "bg-red-950/20 border-red-500/30"
                 : idx === 2 && simulationState === "escalated"
                 ? "bg-amber-950/20 border-amber-500/40 shadow-lg shadow-amber-500/10"
-                : "bg-[#0b140d]/80 border-white/10 hover:border-[#c8f03a]/40"
+                : "bg-[#0F172A]/80 border-white/10 hover:border-[#1FB6FF]/40"
             }`}
           >
             <div>
               <div className="flex flex-wrap items-center justify-between gap-1 mb-2">
-                <span className="text-xs font-mono font-bold text-[#c8f03a] bg-[#c8f03a]/15 border border-[#c8f03a]/30 px-2 py-0.5 rounded">
+                <span className="text-xs font-mono font-bold text-[#1FB6FF] bg-[#1FB6FF]/15 border border-[#1FB6FF]/30 px-2 py-0.5 rounded">
                   {step.role}
                 </span>
                 <span className="text-[11px] text-slate-400">{step.sla}</span>
@@ -124,8 +124,8 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
 
             <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px]">
               <span className="text-slate-400">Trạng thái:</span>
-              {idx === 0 && <span className="text-[#c8f03a] font-mono font-bold">INIT_DONE</span>}
-              {idx === 1 && <span className="text-[#c8f03a] font-mono font-bold">VETTED</span>}
+              {idx === 0 && <span className="text-[#1FB6FF] font-mono font-bold">INIT_DONE</span>}
+              {idx === 1 && <span className="text-[#1FB6FF] font-mono font-bold">VETTED</span>}
               {idx === 2 && (
                 <span
                   className={`font-mono font-bold ${
@@ -133,7 +133,7 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
                       ? "text-amber-400"
                       : simulationState === "rejected"
                       ? "text-red-400"
-                      : "text-[#c8f03a]"
+                      : "text-[#1FB6FF]"
                   }`}
                 >
                   {simulationState === "escalated"
@@ -146,7 +146,7 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
               {idx === 3 && (
                 <span
                   className={`font-mono font-bold ${
-                    simulationState === "rejected" ? "text-red-400" : "text-[#c8f03a]"
+                    simulationState === "rejected" ? "text-red-400" : "text-[#1FB6FF]"
                   }`}
                 >
                   {simulationState === "rejected" ? "ARCHIVED_REJECTED" : "KNOWLEDGE_ACTIVE"}
@@ -160,14 +160,14 @@ export default function InteractiveWorkflow({ locale = "vi" }: { locale?: "vi" |
       {/* Audit Log & Webhook Banner */}
       <div className="mt-5 p-3.5 rounded-xl bg-black/50 border border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="text-[#c8f03a] font-mono font-bold">✓ Audit Trail:</span>
+          <span className="text-[#1FB6FF] font-mono font-bold">✓ Audit Trail:</span>
           <span>
             {isVi
               ? "Mọi hành động phê duyệt ghi nhận: Người duyệt, thời gian, IP, chữ ký số và phát sự kiện webhook.approved."
               : "All actions recorded: Reviewer ID, timestamp, IP, cryptographic hash, and webhook.approved dispatch."}
           </span>
         </div>
-        <span className="text-[11px] font-mono text-[#c8f03a] bg-[#c8f03a]/15 px-2.5 py-0.5 rounded border border-[#c8f03a]/30 font-bold">
+        <span className="text-[11px] font-mono text-[#1FB6FF] bg-[#1FB6FF]/15 px-2.5 py-0.5 rounded border border-[#1FB6FF]/30 font-bold">
           X-OpenVie-Signature: HMAC-SHA256
         </span>
       </div>

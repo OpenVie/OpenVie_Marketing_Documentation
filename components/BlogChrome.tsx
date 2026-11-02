@@ -107,11 +107,11 @@ export function BlogHeader({
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href={home} className="flex items-center gap-2.5 group" aria-label="OpenVie">
           <Image
-            src="/logo.png"
+            src="/openvie-logo.svg"
             alt=""
             width={32}
             height={32}
-            className="h-8 w-8 rounded-[10px] shadow-sm shadow-[#c8f03a]/25 group-hover:scale-105 transition-transform"
+            className="h-8 w-8 rounded-[10px] shadow-sm shadow-[#1FB6FF]/25 group-hover:scale-105 transition-transform"
           />
           <span className="text-base font-black tracking-tight ov-blog-title">OpenVie</span>
           <span className="hidden text-xs font-bold uppercase tracking-widest ov-blog-eyebrow sm:inline">
@@ -262,7 +262,7 @@ export function BlogFooter({ locale }: { locale: BlogLocale }) {
           <div className="space-y-3">
             <Link href={home} className="flex items-center gap-2.5">
               <Image
-                src="/logo.png"
+                src="/openvie-logo.svg"
                 alt=""
                 width={28}
                 height={28}
@@ -337,7 +337,7 @@ export function BlogShell({
   const enHref = `/en/blog${suffix}`;
 
   return (
-    <div className="ov-blog-shell min-h-screen font-sans selection:bg-[#c8f03a] selection:text-slate-950">
+    <div className="ov-blog-shell min-h-screen font-sans selection:bg-[#1FB6FF] selection:text-slate-950">
       <DocumentLang locale={locale} />
       <BlogSkipLink locale={locale} />
       <BlogHeader locale={locale} viHref={viHref} enHref={enHref} />
@@ -351,7 +351,7 @@ export function BlogSkipLink({ locale }: { locale: BlogLocale }) {
   return (
     <a
       href="#blog-main"
-      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-[#c8f03a] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#0b1a0f]"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-[#1FB6FF] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#082F49]"
     >
       {CHROME[locale].skip}
     </a>

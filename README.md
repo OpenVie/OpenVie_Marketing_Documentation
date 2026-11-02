@@ -60,9 +60,9 @@ lib/
 
 - **Không dùng bảng trong API reference**: tham số/schema vẽ dạng dòng dựng
   đứng (`ov-spine-*`) kèm code block JSON (`ov-json-*`).
-- Docs mặc định dark (`#121212`, accent `#1ED760`); sáng/tối qua
+- Docs mặc định dark (`#121212`, accent `#1FB6FF`); sáng/tối qua
   `data-ov-theme` (ThemeToggle, lưu `localStorage`).
-- Landing dùng accent thương hiệu lime `#c8f53c`; class riêng tiền tố
+- Landing dùng accent thương hiệu xanh `#1FB6FF`; class riêng tiền tố
   `.ls-*` để không lẫn token của hai vùng.
 - Landing copy: VI là nguồn, EN đối xứng 1:1; mọi phát biểu tra được về
   `MARKETING_GUIDE.md` ma trận M1–M30; lệnh code copy nguyên văn từ

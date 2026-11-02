@@ -108,13 +108,13 @@ function GithubIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 function StatusChip({ status, text }: { status: ChipStatus; text: string }) {
-  let badgeColor = "bg-[#c8f03a]/15 text-[#d9f96b] border-[#c8f03a]/30";
+  let badgeColor = "bg-[#1FB6FF]/15 text-[#38BDF8] border-[#1FB6FF]/30";
   if (status === "option") {
     badgeColor = "bg-amber-500/15 text-amber-300 border-amber-500/30";
   } else if (status === "op") {
     badgeColor = "bg-white/10 text-slate-200 border-white/20";
   } else if (status === "no") {
-    badgeColor = "bg-[#a3e635]/15 text-[#bef264] border-[#a3e635]/30";
+    badgeColor = "bg-[#149FE3]/15 text-[#38BDF8] border-[#149FE3]/30";
   }
 
   return (
@@ -139,29 +139,29 @@ export default function MarketingLanding({ content }: { content: LandingContent 
 
 
   return (
-    <div className="min-h-screen bg-[#070b09] text-slate-100 font-sans selection:bg-[#c8f03a] selection:text-slate-950">
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-[#1FB6FF] selection:text-slate-950">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#c8f03a] focus:text-slate-950 focus:font-bold focus:rounded-lg focus:shadow-xl"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#1FB6FF] focus:text-slate-950 focus:font-bold focus:rounded-lg focus:shadow-xl"
       >
         {vi ? "Bỏ qua điều hướng đến nội dung chính" : "Skip to main content"}
       </a>
 
       {/* S0 — Sticky Navigation Header */}
-      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#070b09]/80 backdrop-blur-xl transition-all">
+      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#020617]/80 backdrop-blur-xl transition-all">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="OpenVie Homepage">
             <Image
-              src="/logo.png"
+              src="/openvie-logo.svg"
               alt="OpenVie logo"
               width={36}
               height={36}
               priority
-              className="h-9 w-9 rounded-[10px] shadow-md shadow-[#c8f03a]/25 group-hover:scale-105 transition-transform"
+              className="h-9 w-9 rounded-[10px] shadow-md shadow-[#1FB6FF]/25 group-hover:scale-105 transition-transform"
             />
             <span className="text-lg font-black tracking-tight text-white flex items-center gap-1.5">
               OpenVie
-              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#c8f03a]/20 text-[#c8f03a] border border-[#c8f03a]/30">
+              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#1FB6FF]/20 text-[#1FB6FF] border border-[#1FB6FF]/30">
                 v0.3.1
               </span>
             </span>
@@ -187,7 +187,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href="/"
                 className={`px-2.5 py-1 rounded-full transition ${
                   content.locale === "vi"
-                    ? "bg-[#c8f03a] text-slate-950 shadow-sm"
+                    ? "bg-[#1FB6FF] text-slate-950 shadow-sm"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
@@ -197,7 +197,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href="/en"
                 className={`px-2.5 py-1 rounded-full transition ${
                   content.locale === "en"
-                    ? "bg-[#c8f03a] text-slate-950 shadow-sm"
+                    ? "bg-[#1FB6FF] text-slate-950 shadow-sm"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
@@ -209,7 +209,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               href={content.ctaPrimary.href}
               target="_blank"
               rel="noreferrer noopener"
-              className="hidden sm:inline-flex h-9 items-center gap-2 rounded-full bg-gradient-to-r from-[#c8f03a] to-[#d9f96b] px-4 text-xs font-extrabold text-[#0b1a0f] shadow-md shadow-[#c8f03a]/20 hover:shadow-[#c8f03a]/40 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap shrink-0 leading-none"
+              className="hidden sm:inline-flex h-9 items-center gap-2 rounded-full bg-gradient-to-r from-[#1FB6FF] to-[#38BDF8] px-4 text-xs font-extrabold text-[#082F49] shadow-md shadow-[#1FB6FF]/20 hover:shadow-[#1FB6FF]/40 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap shrink-0 leading-none"
             >
               <GithubIcon className="h-4 w-4 shrink-0" />
               <span>{content.ctaPrimary.label}</span>
@@ -247,7 +247,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 target="_blank"
                 rel="noreferrer noopener"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex w-full h-10 items-center justify-center gap-2 rounded-xl bg-[#c8f03a] text-[#0b1a0f] font-bold text-sm whitespace-nowrap"
+                className="flex w-full h-10 items-center justify-center gap-2 rounded-xl bg-[#1FB6FF] text-[#082F49] font-bold text-sm whitespace-nowrap"
               >
                 <GithubIcon className="h-4 w-4 shrink-0" />
                 <span>{content.ctaPrimary.label}</span>
@@ -271,11 +271,11 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                     key={badge}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border transition ${
                       idx === 0
-                        ? "bg-[#c8f03a]/15 border-[#c8f03a]/40 text-[#d9f96b]"
+                        ? "bg-[#1FB6FF]/15 border-[#1FB6FF]/40 text-[#38BDF8]"
                         : "bg-slate-900/60 border-white/10 text-slate-300"
                     }`}
                   >
-                    {idx === 0 && <span className="h-2 w-2 rounded-full bg-[#c8f03a] animate-pulse" />}
+                    {idx === 0 && <span className="h-2 w-2 rounded-full bg-[#1FB6FF] animate-pulse" />}
                     {badge}
                   </span>
                 ))}
@@ -287,7 +287,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                   {h1Lead}
                 </span>
                 {hasTail && (
-                  <span className="block mt-2 bg-gradient-to-r from-[#c8f03a] via-[#d9f96b] to-[#bef264] bg-clip-text text-transparent">
+                  <span className="block mt-2 bg-gradient-to-r from-[#1FB6FF] via-[#38BDF8] to-[#38BDF8] bg-clip-text text-transparent">
                     {h1Tail}
                   </span>
                 )}
@@ -304,14 +304,14 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                   href={content.hero.ctaPrimary.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#c8f03a] to-[#d9f96b] px-7 py-3.5 text-sm font-extrabold text-[#0b1a0f] shadow-xl shadow-[#c8f03a]/25 hover:shadow-[#c8f03a]/45 hover:scale-105 active:scale-95 transition-all"
+                  className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#1FB6FF] to-[#38BDF8] px-7 py-3.5 text-sm font-extrabold text-[#082F49] shadow-xl shadow-[#1FB6FF]/25 hover:shadow-[#1FB6FF]/45 hover:scale-105 active:scale-95 transition-all"
                 >
                   <GithubIcon className="h-4 w-4" />
                   {content.hero.ctaPrimary.label}
                 </a>
                 <a
                   href={content.hero.ctaSecondary.href}
-                  className="inline-flex items-center gap-2 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-white/15 px-6 py-3.5 text-sm font-bold text-white hover:border-[#c8f03a]/40 transition-all"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-white/15 px-6 py-3.5 text-sm font-bold text-white hover:border-[#1FB6FF]/40 transition-all"
                 >
                   <span>📖</span>
                   {content.hero.ctaSecondary.label}
@@ -343,9 +343,9 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               {content.stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl border border-white/5 bg-slate-900/40 p-4 backdrop-blur-sm hover:border-[#c8f03a]/30 transition-colors"
+                  className="rounded-2xl border border-white/5 bg-slate-900/40 p-4 backdrop-blur-sm hover:border-[#1FB6FF]/30 transition-colors"
                 >
-                  <dt className="text-2xl lg:text-3xl font-black tracking-tight text-white bg-gradient-to-tr from-[#c8f03a] to-[#d9f96b] bg-clip-text text-transparent">
+                  <dt className="text-2xl lg:text-3xl font-black tracking-tight text-white bg-gradient-to-tr from-[#1FB6FF] to-[#38BDF8] bg-clip-text text-transparent">
                     {stat.value}
                   </dt>
                   <dd className="mt-1 text-xs font-medium text-slate-400 leading-snug">
@@ -364,9 +364,9 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 <a
                   key={item.label}
                   href={item.href}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-semibold text-slate-300 hover:text-[#d9f96b] hover:border-[#c8f03a]/40 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-semibold text-slate-300 hover:text-[#38BDF8] hover:border-[#1FB6FF]/40 transition-colors"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#c8f03a]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#1FB6FF]" />
                   {item.label}
                 </a>
               ))}
@@ -378,7 +378,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="co-che" className="py-20 border-b border-white/10 relative">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-14">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.issues.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -393,18 +393,18 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               {content.issues.map((issue, index) => (
                 <article
                   key={issue.title}
-                  className="rounded-2xl border border-white/10 bg-slate-950/60 backdrop-blur-xl p-6 sm:p-7 flex flex-col justify-between hover:border-[#c8f03a]/40 hover:shadow-xl hover:shadow-[#c8f03a]/5 transition-all group"
+                  className="rounded-2xl border border-white/10 bg-slate-950/60 backdrop-blur-xl p-6 sm:p-7 flex flex-col justify-between hover:border-[#1FB6FF]/40 hover:shadow-xl hover:shadow-[#1FB6FF]/5 transition-all group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-mono text-3xl font-black text-slate-700 group-hover:text-[#c8f03a]/80 transition-colors">
+                      <span className="font-mono text-3xl font-black text-slate-700 group-hover:text-[#1FB6FF]/80 transition-colors">
                         0{index + 1}
                       </span>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#c8f03a]/15 text-[#d9f96b] border border-[#c8f03a]/30">
+                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#1FB6FF]/15 text-[#38BDF8] border border-[#1FB6FF]/30">
                         {vi ? "Cơ chế kiểm chứng" : "Verified Mechanism"}
                       </span>
                     </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-[#e8fd9a] transition-colors leading-snug">
+                    <h3 className="text-lg font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug">
                       {issue.title}
                     </h3>
                     <p className="mt-3 text-sm text-slate-300 leading-relaxed">
@@ -414,7 +414,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
 
                   {issue.note && (
                     <div className="mt-6 pt-4 border-t border-white/10 text-xs text-slate-400 flex items-start gap-2">
-                      <span className="text-[#c8f03a] shrink-0 mt-0.5">💡</span>
+                      <span className="text-[#1FB6FF] shrink-0 mt-0.5">💡</span>
                       <span>{issue.note}</span>
                     </div>
                   )}
@@ -428,7 +428,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="kien-truc" className="py-20 border-b border-white/10 bg-slate-950/40">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.archEyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -455,7 +455,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                     className="rounded-xl border border-white/10 bg-slate-900/60 p-4 flex flex-col justify-between"
                   >
                     <div>
-                      <b className="text-sm font-bold text-[#d9f96b] block mb-2">{row.owner}</b>
+                      <b className="text-sm font-bold text-[#38BDF8] block mb-2">{row.owner}</b>
                       <p className="text-xs text-slate-300 leading-relaxed">{row.duties}</p>
                     </div>
                     <span className="mt-3 pt-2 border-t border-white/5 text-[10px] text-slate-500 font-mono">
@@ -473,7 +473,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="nang-luc" className="py-20 border-b border-white/10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.cap.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -496,7 +496,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               {content.capabilities.map((cap, idx) => (
                 <article
                   key={cap.title}
-                  className={`rounded-2xl border border-white/10 bg-slate-950/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between hover:border-[#c8f03a]/40 hover:shadow-lg transition-all ${
+                  className={`rounded-2xl border border-white/10 bg-slate-950/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between hover:border-[#1FB6FF]/40 hover:shadow-lg transition-all ${
                     idx === 0 || idx === 1 ? "md:col-span-1 lg:col-span-2 bg-gradient-to-b from-slate-900/60 to-slate-950/80" : ""
                   }`}
                 >
@@ -535,7 +535,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="bao-mat" className="py-20 border-b border-white/10 bg-slate-950/40">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-14">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.sec.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -556,7 +556,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               {content.enterprise.items.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-white/10 bg-slate-900/60 p-5 flex flex-col justify-between hover:border-[#c8f03a]/30 transition-colors"
+                  className="rounded-2xl border border-white/10 bg-slate-900/60 p-5 flex flex-col justify-between hover:border-[#1FB6FF]/30 transition-colors"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
@@ -565,7 +565,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed">{item.body}</p>
                   </div>
-                  <div className="mt-3 pt-2 text-[11px] text-[#c8f03a] font-mono">
+                  <div className="mt-3 pt-2 text-[11px] text-[#1FB6FF] font-mono">
                     ✓ {vi ? "Tiêu chuẩn doanh nghiệp" : "Enterprise Grade"}
                   </div>
                 </div>
@@ -573,8 +573,8 @@ export default function MarketingLanding({ content }: { content: LandingContent 
             </div>
 
             {/* Sovereign Callout */}
-            <div className="mt-8 rounded-2xl border border-[#c8f03a]/30 bg-[#16220a]/20 p-5 md:p-6 text-sm text-slate-200 flex flex-col sm:flex-row items-start gap-4">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#c8f03a]/20 text-[#d9f96b] font-bold border border-[#c8f03a]/30 text-lg">
+            <div className="mt-8 rounded-2xl border border-[#1FB6FF]/30 bg-[#0F172A]/20 p-5 md:p-6 text-sm text-slate-200 flex flex-col sm:flex-row items-start gap-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1FB6FF]/20 text-[#38BDF8] font-bold border border-[#1FB6FF]/30 text-lg">
                 🔒
               </span>
               <div>
@@ -589,7 +589,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="api" className="py-20 border-b border-white/10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-14">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.api.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -619,7 +619,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 {content.api.events.map((event) => (
                   <code
                     key={event}
-                    className="font-mono text-xs px-2.5 py-1 rounded-md bg-slate-900 border border-white/10 text-[#d9f96b]"
+                    className="font-mono text-xs px-2.5 py-1 rounded-md bg-slate-900 border border-white/10 text-[#38BDF8]"
                   >
                     {event}
                   </code>
@@ -632,21 +632,21 @@ export default function MarketingLanding({ content }: { content: LandingContent 
             <div className="mt-8">
               <Link
                 href={content.api.docsHref}
-                className="group flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#c8f03a]/30 bg-gradient-to-r from-[#16220a]/30 via-slate-900/60 to-slate-950 p-6 hover:border-[#c8f03a] transition-all shadow-lg hover:shadow-[#c8f03a]/10"
+                className="group flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#1FB6FF]/30 bg-gradient-to-r from-[#0F172A]/30 via-slate-900/60 to-slate-950 p-6 hover:border-[#1FB6FF] transition-all shadow-lg hover:shadow-[#1FB6FF]/10"
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[#c8f03a] font-bold text-xs uppercase tracking-wider">
+                    <span className="text-[#1FB6FF] font-bold text-xs uppercase tracking-wider">
                       OpenAPI 3.1 Spec
                     </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#c8f03a]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#1FB6FF]" />
                   </div>
-                  <h4 className="text-lg font-bold text-white mt-1 group-hover:text-[#d9f96b] transition-colors">
+                  <h4 className="text-lg font-bold text-white mt-1 group-hover:text-[#38BDF8] transition-colors">
                     {content.api.docsLabel}
                   </h4>
                   <p className="text-xs sm:text-sm text-slate-400 mt-1">{content.api.docsNote}</p>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c8f03a] text-slate-950 font-black text-lg group-hover:translate-x-1 transition-transform">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1FB6FF] text-slate-950 font-black text-lg group-hover:translate-x-1 transition-transform">
                   →
                 </span>
               </Link>
@@ -658,7 +658,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="ranh-gioi" className="py-20 border-b border-white/10 bg-slate-950/60">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-14">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.boundEyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -671,15 +671,15 @@ export default function MarketingLanding({ content }: { content: LandingContent 
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Ready Capabilities */}
-              <div className="rounded-2xl border border-[#c8f03a]/30 bg-[#16220a]/10 p-6 sm:p-7 backdrop-blur-xl">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-4 pb-3 border-b border-[#c8f03a]/20">
-                  <span className="text-[#c8f03a] font-bold">✓</span>
+              <div className="rounded-2xl border border-[#1FB6FF]/30 bg-[#0F172A]/10 p-6 sm:p-7 backdrop-blur-xl">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-4 pb-3 border-b border-[#1FB6FF]/20">
+                  <span className="text-[#1FB6FF] font-bold">✓</span>
                   {content.boundaries.haveTitle}
                 </h3>
                 <ul className="space-y-3">
                   {content.boundaries.have.map((item) => (
                     <li key={item} className="text-xs sm:text-sm text-slate-200 flex items-start gap-2.5 leading-relaxed">
-                      <span className="text-[#c8f03a] font-bold mt-0.5 shrink-0">✓</span>
+                      <span className="text-[#1FB6FF] font-bold mt-0.5 shrink-0">✓</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -687,15 +687,15 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               </div>
 
               {/* Architectural Freedom */}
-              <div className="rounded-2xl border border-[#d9f96b]/30 bg-[#c8f03a]/5 p-6 sm:p-7 backdrop-blur-xl">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-4 pb-3 border-b border-[#d9f96b]/20">
-                  <span className="text-[#c8f03a] font-bold">⚡</span>
+              <div className="rounded-2xl border border-[#38BDF8]/30 bg-[#1FB6FF]/5 p-6 sm:p-7 backdrop-blur-xl">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-4 pb-3 border-b border-[#38BDF8]/20">
+                  <span className="text-[#1FB6FF] font-bold">⚡</span>
                   {content.boundaries.notTitle}
                 </h3>
                 <ul className="space-y-3">
                   {content.boundaries.not.map((item) => (
                     <li key={item} className="text-xs sm:text-sm text-slate-200 flex items-start gap-2.5 leading-relaxed">
-                      <span className="text-[#c8f03a] font-bold mt-0.5 shrink-0">⚡</span>
+                      <span className="text-[#1FB6FF] font-bold mt-0.5 shrink-0">⚡</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -707,7 +707,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
             {content.boundaries.quotes.map((quote) => (
               <blockquote
                 key={quote.text}
-                className="mt-8 rounded-2xl border-l-4 border-[#c8f03a] bg-slate-900/80 p-5 sm:p-6 text-sm sm:text-base font-medium text-slate-200 italic shadow-xl"
+                className="mt-8 rounded-2xl border-l-4 border-[#1FB6FF] bg-slate-900/80 p-5 sm:p-6 text-sm sm:text-base font-medium text-slate-200 italic shadow-xl"
               >
                 &ldquo;{quote.text}&rdquo;
               </blockquote>
@@ -724,7 +724,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="trien-khai" className="py-20 border-b border-white/10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-14">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.deploy.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -771,14 +771,14 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href={content.ctaPrimary.href}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="group flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#c8f03a]/30 bg-gradient-to-r from-[#16220a]/60 via-slate-900/60 to-slate-950 p-6 hover:border-[#c8f03a] transition-all shadow-lg hover:shadow-[#c8f03a]/10"
+                className="group flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#1FB6FF]/30 bg-gradient-to-r from-[#0F172A]/60 via-slate-900/60 to-slate-950 p-6 hover:border-[#1FB6FF] transition-all shadow-lg hover:shadow-[#1FB6FF]/10"
               >
                 <div className="flex items-center gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c8f03a] text-[#0b1a0f] shadow-md shadow-[#c8f03a]/25">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1FB6FF] text-[#082F49] shadow-md shadow-[#1FB6FF]/25">
                     <GithubIcon className="h-6 w-6" />
                   </span>
                   <div>
-                    <h4 className="text-lg font-bold text-white group-hover:text-[#d9f96b] transition-colors">
+                    <h4 className="text-lg font-bold text-white group-hover:text-[#38BDF8] transition-colors">
                       {vi ? "Mã nguồn trên GitHub — OpenVie/OpenVie" : "Source on GitHub — OpenVie/OpenVie"}
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-400 mt-1">
@@ -788,9 +788,9 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                     </p>
                   </div>
                 </div>
-                <span className="flex items-center gap-2 text-xs font-bold text-[#c8f03a]">
+                <span className="flex items-center gap-2 text-xs font-bold text-[#1FB6FF]">
                   github.com/OpenVie/OpenVie
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#c8f03a]/15 border border-[#c8f03a]/30 font-black text-base group-hover:translate-x-1 transition-transform">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1FB6FF]/15 border border-[#1FB6FF]/30 font-black text-base group-hover:translate-x-1 transition-transform">
                     →
                   </span>
                 </span>
@@ -802,10 +802,10 @@ export default function MarketingLanding({ content }: { content: LandingContent 
               <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
                 <div className="space-y-1.5 max-w-xl">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#c8f03a]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#1FB6FF]">
                       {vi ? "Hỗ trợ Triển khai Doanh nghiệp" : "Enterprise Deployment Support"}
                     </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#c8f03a]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#1FB6FF]" />
                   </div>
                   <h4 className="text-base font-bold text-white">
                     {vi
@@ -836,7 +836,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         <section id="lo-trinh" className="py-20 border-b border-white/10 bg-slate-950/40">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                 {frames.roadEyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -855,10 +855,10 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="font-mono text-sm font-bold text-[#c8f03a] bg-[#16220a]/50 border border-[#c8f03a]/30 px-2 py-0.5 rounded">
+                      <span className="font-mono text-sm font-bold text-[#1FB6FF] bg-[#0F172A]/50 border border-[#1FB6FF]/30 px-2 py-0.5 rounded">
                         {row.version}
                       </span>
-                      <span className="text-[11px] font-semibold text-[#d9f96b] bg-[#c8f03a]/10 px-2 py-0.5 rounded-full border border-[#c8f03a]/20">
+                      <span className="text-[11px] font-semibold text-[#38BDF8] bg-[#1FB6FF]/10 px-2 py-0.5 rounded-full border border-[#1FB6FF]/20">
                         {row.status}
                       </span>
                     </div>
@@ -876,7 +876,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href="https://github.com/OpenVie/OpenVie/blob/main/CHANGELOG.md"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#c8f03a] hover:underline"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#1FB6FF] hover:underline"
               >
                 <span>📋</span>
                 <span>{vi ? "Xem chi tiết các thay đổi trong CHANGELOG.md →" : "View detailed release notes in CHANGELOG.md →"}</span>
@@ -890,7 +890,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                <p className="text-xs font-bold uppercase tracking-widest text-[#c8f03a] mb-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#1FB6FF] mb-2">
                   {frames.licEyebrow}
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -905,7 +905,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 <ul className="space-y-3">
                   {content.license.items.map((item) => (
                     <li key={item} className="text-xs sm:text-sm text-slate-200 flex items-start gap-2.5 leading-relaxed">
-                      <span className="text-[#c8f03a] font-bold shrink-0">✓</span>
+                      <span className="text-[#1FB6FF] font-bold shrink-0">✓</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -921,7 +921,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
         </section>
 
         {/* Final CTA Banner */}
-        <section className="py-20 relative overflow-hidden bg-gradient-to-b from-slate-950 to-[#070b09]">
+        <section className="py-20 relative overflow-hidden bg-gradient-to-b from-slate-950 to-[#020617]">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-6">
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
               {content.finalCta.title}
@@ -934,14 +934,14 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href={content.finalCta.primary.href}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#c8f03a] to-[#d9f96b] px-7 py-3.5 text-sm font-extrabold text-[#0b1a0f] shadow-xl shadow-[#c8f03a]/25 hover:shadow-[#c8f03a]/45 hover:scale-105 active:scale-95 transition-all"
+                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#1FB6FF] to-[#38BDF8] px-7 py-3.5 text-sm font-extrabold text-[#082F49] shadow-xl shadow-[#1FB6FF]/25 hover:shadow-[#1FB6FF]/45 hover:scale-105 active:scale-95 transition-all"
               >
                 <GithubIcon className="h-4 w-4" />
                 {content.finalCta.primary.label}
               </a>
               <Link
                 href={content.finalCta.secondary.href}
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-white/15 px-6 py-3.5 text-sm font-bold text-white hover:border-[#c8f03a]/40 transition-all"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-white/15 px-6 py-3.5 text-sm font-bold text-white hover:border-[#1FB6FF]/40 transition-all"
               >
                 <span>📖</span>
                 {content.finalCta.secondary.label}
@@ -955,7 +955,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href="https://www.facebook.com/profile.php?id=61595728591443"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="text-[#c8f03a] font-bold hover:underline"
+                className="text-[#1FB6FF] font-bold hover:underline"
               >
                 {vi ? "Liên hệ Facebook →" : "Contact on Facebook →"}
               </a>
@@ -965,18 +965,18 @@ export default function MarketingLanding({ content }: { content: LandingContent 
       </main>
 
       {/* S12 — Elevated Footer */}
-      <footer className="border-t border-white/10 bg-[#050806] py-14">
+      <footer className="border-t border-white/10 bg-[#020617] py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-white/10">
             {/* Brand column */}
             <div className="space-y-3">
               <Link href="/" className="flex items-center gap-2.5">
                 <Image
-                  src="/logo.png"
+                  src="/openvie-logo.svg"
                   alt="OpenVie logo"
                   width={32}
                   height={32}
-                  className="h-8 w-8 rounded-lg shadow-sm shadow-[#c8f03a]/20"
+                  className="h-8 w-8 rounded-lg shadow-sm shadow-[#1FB6FF]/20"
                 />
                 <span className="text-lg font-bold text-white tracking-tight">OpenVie</span>
               </Link>
@@ -995,7 +995,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                   {col.links.map((link) => (
                     <li key={link.label}>
                       {link.href.startsWith("#") ? (
-                        <a href={link.href} className="text-xs text-slate-400 hover:text-[#c8f03a] transition-colors">
+                        <a href={link.href} className="text-xs text-slate-400 hover:text-[#1FB6FF] transition-colors">
                           {link.label}
                         </a>
                       ) : link.href.startsWith("http") ? (
@@ -1003,7 +1003,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                           href={link.href}
                           target="_blank"
                           rel="noreferrer noopener"
-                          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#c8f03a] transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#1FB6FF] transition-colors"
                         >
                           {link.href.includes("facebook.com") ? (
                             <FacebookIcon className="h-3.5 w-3.5 fill-current" />
@@ -1013,7 +1013,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                           {link.label}
                         </a>
                       ) : (
-                        <Link href={link.href} className="text-xs text-slate-400 hover:text-[#c8f03a] transition-colors">
+                        <Link href={link.href} className="text-xs text-slate-400 hover:text-[#1FB6FF] transition-colors">
                           {link.label}
                         </Link>
                       )}
@@ -1031,7 +1031,7 @@ export default function MarketingLanding({ content }: { content: LandingContent 
                 href="https://www.facebook.com/profile.php?id=61595728591443"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-1.5 hover:text-[#c8f03a] transition-colors"
+                className="inline-flex items-center gap-1.5 hover:text-[#1FB6FF] transition-colors"
               >
                 <FacebookIcon className="h-3.5 w-3.5 fill-current" />
                 Facebook
