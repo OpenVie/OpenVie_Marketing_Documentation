@@ -35,12 +35,12 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(135deg, #07100a 0%, #101d12 100%)",
+          background: "linear-gradient(135deg, #020617 0%, #0F172A 100%)",
           padding: "72px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ width: 22, height: 22, borderRadius: 6, background: "#c8f03a" }} />
+          <div style={{ width: 22, height: 22, borderRadius: 6, background: "#1FB6FF" }} />
           <span style={{ color: "#ffffff", fontSize: 30, fontWeight: 700 }}>OpenVie</span>
         </div>
 
@@ -48,7 +48,7 @@ export default function OpenGraphImage() {
           <div style={{ fontSize: 64, fontWeight: 700, color: "#ffffff", letterSpacing: -2, lineHeight: 1.15 }}>
             RAG tự lưu trữ cho
           </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#c8f03a", letterSpacing: -2, lineHeight: 1.15 }}>
+          <div style={{ fontSize: 64, fontWeight: 700, color: "#1FB6FF", letterSpacing: -2, lineHeight: 1.15 }}>
             tài liệu nội bộ
           </div>
         </div>
@@ -59,10 +59,10 @@ export default function OpenGraphImage() {
               key={b.text}
               style={{
                 display: "flex",
-                border: "2px solid rgba(200, 240, 58, 0.4)",
+                border: "2px solid rgba(31, 182, 255, 0.4)",
                 borderRadius: 999,
                 padding: "10px 22px",
-                color: "#c8f03a",
+                color: "#1FB6FF",
                 fontSize: 26,
                 fontWeight: 700,
               }}

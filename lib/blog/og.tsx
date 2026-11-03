@@ -32,14 +32,14 @@ export function blogOgElement({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: "linear-gradient(135deg, #07100a 0%, #101d12 100%)",
+        background: "linear-gradient(135deg, #020617 0%, #0F172A 100%)",
         padding: "72px",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-        <div style={{ width: 22, height: 22, borderRadius: 6, background: "#c8f03a" }} />
+        <div style={{ width: 22, height: 22, borderRadius: 6, background: "#1FB6FF" }} />
         <span style={{ color: "#ffffff", fontSize: 30, fontWeight: 700 }}>OpenVie</span>
-        <span style={{ color: "#93a89a", fontSize: 26 }}>{eyebrow}</span>
+        <span style={{ color: "#94A3B8", fontSize: 26 }}>{eyebrow}</span>
       </div>
 
       <div
@@ -59,10 +59,10 @@ export function blogOgElement({
         <span
           style={{
             display: "flex",
-            border: "2px solid rgba(200, 240, 58, 0.4)",
+            border: "2px solid rgba(31, 182, 255, 0.4)",
             borderRadius: 999,
             padding: "10px 22px",
-            color: "#c8f03a",
+            color: "#1FB6FF",
             fontSize: 26,
             fontWeight: 700,
           }}

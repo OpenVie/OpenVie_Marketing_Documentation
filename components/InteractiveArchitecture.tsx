@@ -216,10 +216,10 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
   return (
     <div className="w-full space-y-6">
       {/* Visual Blueprint Matrix */}
-      <div className="rounded-2xl border border-white/10 bg-[#080d09]/90 backdrop-blur-xl p-5 md:p-6 shadow-2xl ring-1 ring-white/5">
+      <div className="rounded-2xl border border-white/10 bg-[#0F172A]/90 backdrop-blur-xl p-5 md:p-6 shadow-2xl ring-1 ring-white/5">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6 border-b border-white/10 pb-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#c8f03a]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1FB6FF]">
               {isVi ? "Sơ đồ Kiến trúc Phân tầng" : "Tiered Architecture Blueprint"}
             </span>
             <h3 className="text-lg font-bold text-white mt-0.5">
@@ -236,11 +236,11 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
           {tiers.map((tier, tierIdx) => (
             <div
               key={tier.id}
-              className="rounded-xl border border-white/5 bg-[#0b140d]/60 p-4 transition-all hover:border-white/15"
+              className="rounded-xl border border-white/5 bg-[#0F172A]/60 p-4 transition-all hover:border-white/15"
             >
               <div className="flex items-center justify-between gap-2 mb-3">
                 <span className="text-xs font-semibold text-slate-300 flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#c8f03a] shadow-[0_0_6px_#c8f03a]" />
+                  <span className="h-2 w-2 rounded-full bg-[#1FB6FF] shadow-[0_0_6px_#1FB6FF]" />
                   {tier.label}
                 </span>
                 <span className="text-[11px] font-mono text-slate-400 bg-black/40 px-2.5 py-0.5 rounded border border-white/5 font-semibold">
@@ -258,8 +258,8 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
                       onClick={() => setSelectedNodeId(node.id)}
                       className={`relative text-left p-3.5 rounded-xl border transition-all duration-200 flex flex-col justify-between ${
                         isSelected
-                          ? "bg-[#c8f03a]/15 border-[#c8f03a] text-white shadow-lg shadow-[#c8f03a]/15 ring-1 ring-[#c8f03a]"
-                          : "bg-black/40 border-white/10 text-slate-300 hover:border-[#c8f03a]/50 hover:bg-white/5"
+                          ? "bg-[#1FB6FF]/15 border-[#1FB6FF] text-white shadow-lg shadow-[#1FB6FF]/15 ring-1 ring-[#1FB6FF]"
+                          : "bg-black/40 border-white/10 text-slate-300 hover:border-[#1FB6FF]/50 hover:bg-white/5"
                       }`}
                     >
                       <div>
@@ -272,7 +272,7 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
                           )}
                         </div>
                         {node.port && (
-                          <span className="font-mono text-[11px] text-[#c8f03a] block mb-1 font-bold">
+                          <span className="font-mono text-[11px] text-[#1FB6FF] block mb-1 font-bold">
                             {node.port}
                           </span>
                         )}
@@ -287,7 +287,7 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
 
               {tierIdx < tiers.length - 1 && (
                 <div className="flex justify-center my-1 pt-2 opacity-50">
-                  <span className="text-xs text-[#c8f03a]/80 font-mono">↓ luồng dữ liệu & xác thực mTLS / SSE ↓</span>
+                  <span className="text-xs text-[#1FB6FF]/80 font-mono">↓ luồng dữ liệu & xác thực mTLS / SSE ↓</span>
                 </div>
               )}
             </div>
@@ -296,17 +296,17 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
       </div>
 
       {/* Node Inspector Drawer */}
-      <div className="rounded-2xl border border-[#c8f03a]/40 bg-[#080d09]/95 backdrop-blur-xl p-5 md:p-6 shadow-xl ring-1 ring-[#c8f03a]/20">
+      <div className="rounded-2xl border border-[#1FB6FF]/40 bg-[#0F172A]/95 backdrop-blur-xl p-5 md:p-6 shadow-xl ring-1 ring-[#1FB6FF]/20">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#c8f03a]/20 text-[#c8f03a] font-black border border-[#c8f03a]/40 text-base shadow-[0_0_12px_rgba(200,240,58,0.2)]">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1FB6FF]/20 text-[#1FB6FF] font-black border border-[#1FB6FF]/40 text-base shadow-[0_0_12px_rgba(31,182,255,0.2)]">
               ⚙️
             </span>
             <div>
               <h4 className="text-base font-bold text-white flex items-center gap-2">
                 <span>{selectedNode.name}</span>
                 {selectedNode.port && (
-                  <span className="text-xs font-mono font-bold text-[#c8f03a] bg-[#c8f03a]/15 border border-[#c8f03a]/30 px-2 py-0.5 rounded">
+                  <span className="text-xs font-mono font-bold text-[#1FB6FF] bg-[#1FB6FF]/15 border border-[#1FB6FF]/30 px-2 py-0.5 rounded">
                     {selectedNode.port}
                   </span>
                 )}
@@ -317,17 +317,17 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
                 )}
               </h4>
               <span className="text-xs text-slate-400">
-                Giao thức: <code className="text-[#c8f03a] font-mono">{selectedNode.protocol}</code>
+                Giao thức: <code className="text-[#1FB6FF] font-mono">{selectedNode.protocol}</code>
               </span>
             </div>
           </div>
-          <span className="text-xs font-mono text-[#c8f03a] bg-[#c8f03a]/10 border border-[#c8f03a]/30 px-3 py-1 rounded-md font-bold">
+          <span className="text-xs font-mono text-[#1FB6FF] bg-[#1FB6FF]/10 border border-[#1FB6FF]/30 px-3 py-1 rounded-md font-bold">
             docs/ARCHITECTURE.md §1 §3
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div className="bg-[#0b140d]/80 border border-white/5 rounded-xl p-4">
+          <div className="bg-[#0F172A]/80 border border-white/5 rounded-xl p-4">
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block mb-1.5">
               {isVi ? "Nhiệm vụ & Chức năng trong hệ thống:" : "Core Responsibilities & Capabilities:"}
             </span>
@@ -336,11 +336,11 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
             </p>
           </div>
 
-          <div className="bg-[#0b140d]/80 border border-white/5 rounded-xl p-4">
+          <div className="bg-[#0F172A]/80 border border-white/5 rounded-xl p-4">
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block mb-1.5">
               {isVi ? "Phân định Sở hữu Dữ liệu (Data Ownership):" : "Data Ownership & State Boundary:"}
             </span>
-            <p className="text-sm text-[#c8f03a] leading-relaxed font-bold">
+            <p className="text-sm text-[#1FB6FF] leading-relaxed font-bold">
               {isVi ? selectedNode.stateOwnership : selectedNode.stateOwnershipEn}
             </p>
             <p className="text-xs text-slate-400 mt-2">

@@ -894,7 +894,7 @@ export function landingJsonLd(locale: "vi" | "en") {
       "@type": "Organization",
       name: "OpenVie",
       url: "https://openvie.org",
-      logo: "https://openvie.org/logo.png",
+      logo: "https://openvie.org/openvie-logo.svg",
       description: isVi
         ? "Nền tảng RAG tự lưu trữ tối ưu tiếng Việt cho doanh nghiệp và cơ quan nhà nước."
         : "Enterprise-grade self-hosted RAG platform optimized for Vietnamese and internal documents.",

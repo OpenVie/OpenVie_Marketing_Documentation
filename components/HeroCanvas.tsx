@@ -75,12 +75,12 @@ export default function HeroCanvas() {
     handleResize();
     window.addEventListener("resize", handleResize, { passive: true });
 
-    // Exact OpenVie Brand Palette: Electric Lime #c8f03a & Chartreuse
+    // OpenVie brand palette: primary blue with supporting blue tones.
     const colors = [
-      "rgba(200, 240, 58, ",  // Primary logo lime #c8f03a
-      "rgba(217, 249, 107, ", // Light lime #d9f96b
-      "rgba(190, 242, 100, ", // Soft chartreuse #bef264
-      "rgba(163, 230, 53, ",  // Vivid lime #a3e635
+      "rgba(31, 182, 255, ",  // Primary #1FB6FF
+      "rgba(56, 189, 248, ",  // Light #38BDF8
+      "rgba(20, 159, 227, ",  // Secondary #149FE3
+      "rgba(3, 105, 161, ",   // Deep #0369A1
     ];
 
     const particleCount = Math.min(Math.floor((width * height) / 14000), 75);
@@ -112,7 +112,7 @@ export default function HeroCanvas() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Subtle ambient logo lime radial glow
+      // Subtle ambient brand-blue radial glow
       const radialGlow1 = ctx.createRadialGradient(
         width * 0.8,
         height * 0.2,
@@ -121,8 +121,8 @@ export default function HeroCanvas() {
         height * 0.2,
         Math.min(width * 0.45, 450)
       );
-      radialGlow1.addColorStop(0, "rgba(200, 240, 58, 0.10)");
-      radialGlow1.addColorStop(0.5, "rgba(163, 230, 53, 0.04)");
+      radialGlow1.addColorStop(0, "rgba(31, 182, 255, 0.10)");
+      radialGlow1.addColorStop(0.5, "rgba(20, 159, 227, 0.04)");
       radialGlow1.addColorStop(1, "rgba(0, 0, 0, 0)");
 
       ctx.fillStyle = radialGlow1;
@@ -136,7 +136,7 @@ export default function HeroCanvas() {
         height * 0.7,
         Math.min(width * 0.4, 380)
       );
-      radialGlow2.addColorStop(0, "rgba(200, 240, 58, 0.06)");
+      radialGlow2.addColorStop(0, "rgba(31, 182, 255, 0.06)");
       radialGlow2.addColorStop(1, "rgba(0, 0, 0, 0)");
 
       ctx.fillStyle = radialGlow2;
@@ -184,7 +184,7 @@ export default function HeroCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(200, 240, 58, ${filamentAlpha})`;
+            ctx.strokeStyle = `rgba(31, 182, 255, ${filamentAlpha})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }

@@ -39,7 +39,7 @@ export default function DocumentationHeader({
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
         <Link href={homeHref} className="ov-docs-brand" aria-label={isEn ? "OpenVie — home" : "OpenVie — về trang chủ"}>
           <Image
-            src="/logo.png"
+            src="/openvie-logo.svg"
             alt="OpenVie logo"
             width={22}
             height={22}
