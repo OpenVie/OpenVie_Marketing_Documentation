@@ -11,7 +11,7 @@ import {
   groupEndpointsByTag,
   type OpenApiDocument,
 } from "@/lib/openapi";
-import { SITE_BASE_URL, SITE_ROUTES } from "@/lib/routes";
+import { OPENVIE_API_BASE_URL, SITE_BASE_URL, SITE_ROUTES } from "@/lib/routes";
 
 const document = openApiDocument as unknown as OpenApiDocument;
 const guides = [
@@ -40,8 +40,9 @@ export default function DocsPage() {
   const endpoints = extractEndpoints(document);
   const groups = groupEndpointsByTag(endpoints, document);
   const schemas = document.components?.schemas ?? {};
-  const servers = documentedServers(document);
-  const baseUrl = servers[0] ?? "http://localhost:8080";
+  const documented = documentedServers(document);
+  const servers = [OPENVIE_API_BASE_URL, ...documented.filter((url) => url !== OPENVIE_API_BASE_URL)];
+  const baseUrl = OPENVIE_API_BASE_URL;
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",

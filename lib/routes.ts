@@ -3,6 +3,11 @@
 export const SITE_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
+/** Public API origin used in generated client examples and OpenAPI output. */
+export const OPENVIE_API_BASE_URL =
+  process.env.NEXT_PUBLIC_OPENVIE_API_BASE_URL ??
+  "https://premonumental-melita-uncontained.ngrok-free.dev";
+
 export interface SiteRoute {
   path: string;
   label: string;
