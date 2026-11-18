@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { OPENVIE_API_BASE_URL } from "@/lib/routes";
 
 const SNIPPETS = {
   curl: {
@@ -18,7 +19,7 @@ curl --request GET \\
   },
   node: {
     label: "Node.js",
-    code: `const base = process.env.OPENVIE; // http://localhost:8080
+    code: `const base = process.env.OPENVIE ?? "${OPENVIE_API_BASE_URL}";
 
 const { accessToken } = await fetch(base + "/api/v1/auth/login", {
   method: "POST",
@@ -37,7 +38,7 @@ const documents = await fetch(base + "/api/v1/documents", {
     label: "Python",
     code: `import os, requests
 
-base = os.environ.get("OPENVIE", "http://localhost:8080")
+base = os.environ.get("OPENVIE", "${OPENVIE_API_BASE_URL}")
 
 login = requests.post(
     base + "/api/v1/auth/login",
@@ -110,15 +111,15 @@ export default function QuickstartTabs({ locale = "vi" }: { locale?: "vi" | "en"
       <p className="ls-quickstart-note">
         {isEn ? (
           <>
-            Set <code>$OPENVIE</code> to your server base URL (defaults to{" "}
-            <code>http://localhost:8080</code> in dev). Full responses for each
+            Set <code>$OPENVIE</code> to your server base URL (this site defaults to{" "}
+            <code>{OPENVIE_API_BASE_URL}</code>). Full responses for each
             endpoint are documented in the{" "}
             <a href="/en/docs#reference">API Reference</a>.
           </>
         ) : (
           <>
-            Đặt <code>$OPENVIE</code> là base URL server của bạn (mặc định dev là{" "}
-            <code>http://localhost:8080</code>). Response đầy đủ của từng endpoint
+            Đặt <code>$OPENVIE</code> là base URL server của bạn (mặc định trên trang này là{" "}
+            <code>{OPENVIE_API_BASE_URL}</code>). Response đầy đủ của từng endpoint
             xem trong <a href="/docs#reference">API Reference</a>.
           </>
         )}
