@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MarketingLanding from "@/components/MarketingLanding";
+import MarketingLanding from "@/components/MarketingLandingBase";
 import { landingContentFor, landingJsonLd } from "@/lib/landing";
 import { SITE_BASE_URL, SITE_ROUTES } from "@/lib/routes";
 

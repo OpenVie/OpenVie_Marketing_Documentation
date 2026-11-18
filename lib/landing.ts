@@ -132,10 +132,10 @@ const VI: LandingContent = {
   ],
   ctaPrimary: { label: "Tự triển khai", href: "https://github.com/OpenVie/OpenVie" },
   hero: {
-    badges: ["Mã nguồn mở Apache-2.0", "100% Tự lưu trữ (Self-Hosted)", "Tối ưu tiếng Việt", "v0.3.1 Stable"],
-    h1: "RAG Tự Lưu Trữ Tối Ưu Tiếng Việt — Trả lời có trích dẫn, từ chối khi thiếu căn cứ",
+    badges: ["100% Tự lưu trữ (Self-Hosted)", "Tối ưu tiếng Việt", "v0.3.1 Stable"],
+    h1: "Kết nối tri thức\nđể công việc vận hành tốt hơn — Rõ nguồn. Đúng quy trình. Dễ kiểm soát.",
     sub:
-      "Nền tảng RAG cấp doanh nghiệp: Phân quyền theo workspace, truy hồi lai Dense + Sparse + Graph, phê duyệt văn bản BPMN 2 cấp và hồ dữ liệu Lakehouse DuckDB — Vận hành hoàn toàn trên hạ tầng của bạn.",
+      "Nơi tài liệu, quy trình và dữ liệu nội bộ được kết nối để mọi người hỏi bằng ngôn ngữ tự nhiên, tìm đúng thông tin và làm việc hiệu quả hơn.",
     ctaPrimary: { label: "Tự triển khai trên GitHub", href: "https://github.com/OpenVie/OpenVie" },
     ctaSecondary: { label: "Xem tài liệu & API", href: "/docs" },
     kickerLabel: "Triển khai sản xuất bằng Docker Compose",
@@ -148,7 +148,6 @@ const VI: LandingContent = {
     ],
   },
   proof: [
-    { label: "Mã nguồn mở Apache-2.0", href: "#giay-phep" },
     { label: "SSE Streaming thời gian thực", href: "#co-che" },
     { label: "Keycloak SSO OIDC", href: "#nang-luc" },
     { label: "Flowable BPMN 2 cấp", href: "#nang-luc" },
@@ -166,25 +165,19 @@ const VI: LandingContent = {
   ],
   issues: [
     {
-      title: "Làm sao đảm bảo câu trả lời không bịa đặt (Hallucination)?",
-      body:
-        "OpenVie tổng hợp câu trả lời dựa trên kho tri thức workspace của bạn, đánh dấu nguồn trích dẫn [S1] đến từng đoạn tài liệu cụ thể. Khi không tìm thấy bằng chứng đối chiếu, hệ thống kích hoạt cơ chế từ chối (Abstention) thay vì suy đoán.",
-      note:
-        "Trích dẫn nguồn chỉ hiển thị sau khi Spring xác thực phân quyền người dùng và ghi nhận phản hồi.",
+      title: "Trả lời rõ nguồn",
+      body: "Mỗi câu trả lời dựa trên tài liệu doanh nghiệp cho phép sử dụng, kèm nguồn tham khảo để mọi người dễ kiểm tra.",
+      note: "Không đủ thông tin, hệ thống sẽ nói rõ thay vì trả lời phỏng đoán.",
     },
     {
-      title: "Dữ liệu nhạy cảm phải tuyệt đối lưu trữ nội bộ?",
-      body:
-        "Toàn bộ mô hình AI chạy cục bộ qua Ollama (chat Vylinh ~3B; embedding BGE-M3). Nền tảng tự lưu trữ trọn gói trên máy chủ vật lý hoặc hạ tầng riêng của tổ chức, không rò rỉ bất kỳ byte dữ liệu nào ra bên ngoài.",
-      note:
-        "Hỗ trợ kết nối endpoint OpenAI-compatible khi tổ chức có nhu cầu mở rộng, hoàn toàn do quản trị viên quyết định.",
+      title: "Dữ liệu do doanh nghiệp quản lý",
+      body: "Triển khai trên hạ tầng riêng để tài liệu và dữ liệu nội bộ được quản lý theo chính sách của doanh nghiệp.",
+      note: "Bạn chủ động về nơi lưu trữ, quyền truy cập và cách hệ thống kết nối.",
     },
     {
-      title: "Văn bản nội bộ cần thẩm định trước khi đưa vào kho tri thức?",
-      body:
-        "Tích hợp sẵn engine Flowable BPMN nhúng cho quy trình phê duyệt tài liệu 2 cấp: cấp 1 WORKSPACE_ADMIN, cấp 2 ORG_OWNER. Hỗ trợ thiết lập SLA tự động, chống tự phê duyệt và lưu vết audit log bất biến.",
-      note:
-        "Quyết định phê duyệt tài liệu của chính mình bắt buộc phải đến từ người có thẩm quyền khác.",
+      title: "Tài liệu quan trọng được duyệt trước khi dùng",
+      body: "Thiết lập các bước phê duyệt, phân công người phụ trách và theo dõi tiến độ xử lý tài liệu.",
+      note: "Mọi quyết định đều được ghi nhận rõ ràng để dễ đối soát khi cần.",
     },
   ],
   arch: {
@@ -208,54 +201,24 @@ const VI: LandingContent = {
   },
   capabilities: [
     {
-      title: "Hỏi đáp có trích dẫn nguồn [S1]",
+      title: "Trả lời có căn cứ",
       status: "daco",
-      body:
-        "Tương tác hỏi đáp trên kho tài liệu workspace qua luồng SSE streaming tốc độ cao. Mọi phản hồi đều gắn thẻ trích dẫn chính xác và tự động từ chối khi không có tài liệu chứng minh.",
+      body: "Hỏi bằng ngôn ngữ tự nhiên, nhận câu trả lời kèm nguồn để dễ kiểm tra.",
     },
     {
-      title: "Truy hồi hỗn hợp Dense + Sparse + Graph",
+      title: "Quản lý tài liệu tập trung",
       status: "daco",
-      body:
-        "Dung hợp sức mạnh của Vector BGE-M3, tìm kiếm từ khóa BM25 và Đồ thị tri thức Kùzu. Tự động viết lại câu hỏi nối tiếp và kết hợp kết quả qua thuật toán Reciprocal Rank Fusion (RRF).",
+      body: "Lưu trữ, sắp xếp và tìm lại tài liệu của cá nhân hoặc cả đội trong một nơi.",
     },
     {
-      title: "Hấp thụ đa định dạng tài liệu",
+      title: "Số hoá quy trình nghiệp vụ",
       status: "daco",
-      secondaryStatus: "option",
-      secondaryLabel: "OCR & ASR — Mô-đun mở rộng linh hoạt",
-      body:
-        "Xử lý bất đồng bộ PDF, DOCX, TXT, MD, HTML, XLSX, CSV với kiểm tra mã băm SHA-256 chống trùng lặp. Hỗ trợ kích hoạt mô-đun OCR cho tài liệu quét và ASR nhận diện âm thanh/video khi cần.",
+      body: "Biến các việc lặp lại như tiếp nhận, phê duyệt, theo dõi hồ sơ thành quy trình rõ ràng, dễ quản lý.",
     },
     {
-      title: "Phê duyệt văn bản e-Office 2 cấp",
+      title: "Xây dựng ứng dụng cho công việc",
       status: "daco",
-      body:
-        "Tích hợp trực tiếp engine Flowable BPMN nhúng. Quản trị vòng đời tài liệu với SLA tự động (24h nhắc / 48h leo thang), chống tự duyệt và lưu vết audit trail hoàn chỉnh.",
-    },
-    {
-      title: "Quản trị định danh & SSO Doanh nghiệp",
-      status: "daco",
-      body:
-        "Đăng nhập một lần Keycloak OIDC (PKCE S256) hoặc mật khẩu/JWT. Ánh xạ vai trò IdP sang 3 cấp RBAC chuẩn: ORG_OWNER, WORKSPACE_ADMIN, MEMBER. Cấp phát API key máy (M2M) ovk_ bảo mật.",
-    },
-    {
-      title: "Hồ dữ liệu Lakehouse & DuckDB OLAP",
-      status: "daco",
-      body:
-        "Thu thập dữ liệu thời gian thực (CDC) qua RabbitMQ ghi định dạng Snappy Parquet trên SeaweedFS S3. DuckDB nhúng cho phép chạy báo cáo và phân tích SQL chuyên sâu mà không làm chậm hệ thống chính.",
-    },
-    {
-      title: "Kiến trúc Headless & Webhook Ký số",
-      status: "daco",
-      body:
-        "100% năng lực hệ thống cung cấp qua RESTful API chuẩn /api/v1/**. Hỗ trợ Webhook ký số HMAC-SHA256 thông báo sự kiện tài liệu/quy trình với cơ chế outbox retry tự động.",
-    },
-    {
-      title: "Bảo mật cổng biên APISIX & Quét mã độc",
-      status: "daco",
-      body:
-        "Cổng biên APISIX kiểm soát tần suất truy cập theo route, thiết lập security headers (HSTS, CSP). ClamAV quét luồng byte INSTREAM cách ly mã độc ngay tại cửa ngõ trước khi lưu trữ.",
+      body: "Tạo các công cụ đơn giản cho bán hàng, nhân sự, vận hành hoặc bất kỳ nhu cầu riêng nào của doanh nghiệp.",
     },
   ],
   enterprise: {
@@ -442,7 +405,7 @@ const VI: LandingContent = {
       "OpenVie là dự án mã nguồn mở thuần túy, trao quyền tự chủ công nghệ trọn vẹn cho cộng đồng và doanh nghiệp.",
     items: [
       "Giấy phép Apache License 2.0 — Bản quyền 2026 LinkedNodeDigital, ghi nhận chi tiết trong tệp NOTICE.",
-      "Tự do triển khai, tùy biến, fork mã nguồn hoặc cung cấp dịch vụ lưu trữ theo điều khoản giấy phép.",
+      "Tự do triển khai, tùy biến, fork mã nguồn hoặc thương mại hóa theo điều khoản giấy phép.",
       "Các thư viện bên thứ ba, container image và trọng số mô hình AI duy trì điều khoản giấy phép tương ứng.",
       "Mọi quy trình phát hành đều tuân thủ kiểm định bảo mật nghiêm ngặt trước khi xuất bản.",
     ],
@@ -467,7 +430,7 @@ const VI: LandingContent = {
           { label: "Giải pháp", href: "#co-che" },
           { label: "Kiến trúc", href: "#kien-truc" },
           { label: "Năng lực", href: "#nang-luc" },
-          { label: "Tiêu chuẩn", href: "#ranh-gioi" },
+          // { label: "Tiêu chuẩn", href: "#ranh-gioi" },
           { label: "Triển khai", href: "#trien-khai" },
           { label: "Lộ trình", href: "#lo-trinh" },
           { label: "Nhật ký thay đổi (CHANGELOG.md)", href: "https://github.com/OpenVie/OpenVie/blob/main/CHANGELOG.md" },
@@ -494,7 +457,7 @@ const VI: LandingContent = {
       },
     ],
     pathNote:
-      "OpenVie là nền tảng RAG tự lưu trữ tối ưu tiếng Việt. Tên gọi và các định danh mã nguồn tuân thủ kiến trúc mô tả trong tài liệu dự án.",
+      "OpenVie là nền tảng vận hành nội bộ, kết nối tài liệu, quy trình và ứng dụng nghiệp vụ của doanh nghiệp.",
     licenseLine: "Apache License 2.0 · Bản quyền 2026 LinkedNodeDigital · Độc lập & Tự chủ công nghệ",
   },
 };
@@ -512,18 +475,18 @@ const EN: LandingContent = {
     { label: "Security", href: "#bao-mat" },
     { label: "API & Integration", href: "#api" },
     { label: "Deployment", href: "#trien-khai" },
-    { label: "Docs", href: "/docs" },
+    { label: "Docs", href: "/en/docs" },
     { label: "Blog", href: "/en/blog" },
     { label: "License", href: "#giay-phep" },
   ],
   ctaPrimary: { label: "Self-host", href: "https://github.com/OpenVie/OpenVie" },
   hero: {
-    badges: ["Apache-2.0 Open Source", "100% Self-Hosted", "Vietnamese-First", "v0.3.1 Stable"],
-    h1: "Enterprise Self-Hosted RAG — Verifiable citations, strict abstention without evidence",
+    badges: ["100% Self-Hosted", "Built for Vietnamese", "v0.3.1 Stable"],
+    h1: "Connect knowledge\nto make work run better — Clear sources. Reliable workflows. Easy control.",
     sub:
-      "Enterprise-grade RAG platform: Workspace-scoped knowledge, hybrid Dense + Sparse + Graph retrieval, 2-stage Flowable BPMN document approval, and embedded Lakehouse DuckDB analytics — 100% on your own infrastructure.",
+      "Bring documents, workflows, and internal data together so every team can ask in natural language, find the right information, and work more effectively.",
     ctaPrimary: { label: "Self-host from GitHub", href: "https://github.com/OpenVie/OpenVie" },
-    ctaSecondary: { label: "Explore API Docs", href: "/docs" },
+    ctaSecondary: { label: "Explore docs & API", href: "/en/docs" },
     kickerLabel: "Production Deployment with Docker Compose",
     kicker: [
       "cp .env.production.example .env.production",
@@ -534,7 +497,6 @@ const EN: LandingContent = {
     ],
   },
   proof: [
-    { label: "Apache-2.0 Open Source", href: "#giay-phep" },
     { label: "Real-time SSE Streaming", href: "#co-che" },
     { label: "Keycloak OIDC SSO", href: "#nang-luc" },
     { label: "2-Stage Flowable BPMN", href: "#nang-luc" },
@@ -552,22 +514,19 @@ const EN: LandingContent = {
   ],
   issues: [
     {
-      title: "How do you prevent LLM hallucinations in internal documents?",
-      body:
-        "OpenVie synthesizes answers strictly grounded in your workspace knowledge base, marking exact citations [S1] down to document snippets. When no supporting evidence is found, it triggers intelligent abstention rather than speculating.",
-      note: "Citations appear only after Spring authenticates user access and persists the final response.",
+      title: "Answers with clear sources",
+      body: "Every answer uses business documents that are allowed for use and includes references that are easy to verify.",
+      note: "When information is insufficient, the system says so instead of guessing.",
     },
     {
-      title: "Must sensitive data remain strictly on-premises?",
-      body:
-        "All models run locally via Ollama (chat Vylinh ~3B; embedding BGE-M3). The platform self-hosts completely on your private servers or VPC, with zero bytes of confidential data leaking to external clouds.",
-      note: "External OpenAI-compatible endpoints can be optionally configured if desired by the operator.",
+      title: "Business-managed data",
+      body: "Deploy on private infrastructure so documents and internal data follow your business policies.",
+      note: "You control where data lives, who can access it, and how the system connects.",
     },
     {
-      title: "How are internal documents vetted before knowledge ingestion?",
-      body:
-        "Integrated embedded Flowable BPMN engine enforces a 2-stage approval workflow: stage 1 WORKSPACE_ADMIN, stage 2 ORG_OWNER. Features automated SLAs, anti-self-approval rules, and an immutable audit trail.",
-      note: "Approval decisions for one's own documents must come from an authorized peer reviewer.",
+      title: "Important documents approved before use",
+      body: "Set approval steps, assign owners, and track document-processing progress.",
+      note: "Every decision is clearly recorded for review when needed.",
     },
   ],
   arch: {
@@ -591,54 +550,24 @@ const EN: LandingContent = {
   },
   capabilities: [
     {
-      title: "Cited Chat with [S1] References",
+      title: "Evidence-based answers",
       status: "daco",
-      body:
-        "Interactive Q&A over workspace knowledge bases via low-latency SSE streaming. Every answer links verifiable citations and automatically abstains when facts are missing.",
+      body: "Ask in natural language and receive an answer with sources that are easy to verify.",
     },
     {
-      title: "Hybrid Retrieval: Dense + Sparse + Graph",
+      title: "Centralized document management",
       status: "daco",
-      body:
-        "Fuses the power of BGE-M3 vector embeddings, BM25 keyword matching, and Kùzu Knowledge Graph. Rewrites conversational follow-ups and merges rankings via RRF.",
+      body: "Store, organize, and find personal or team documents in one place.",
     },
     {
-      title: "Multi-Format Document Ingestion",
+      title: "Digitized business workflows",
       status: "daco",
-      secondaryStatus: "option",
-      secondaryLabel: "OCR & ASR — Flexible Modular Extensions",
-      body:
-        "Asynchronous ingestion of PDF, DOCX, TXT, MD, HTML, XLSX, CSV with SHA-256 deduplication. Activate optional OCR for scanned docs and ASR for audio/video on demand.",
+      body: "Turn recurring work such as intake, approval, and case tracking into clear, manageable workflows.",
     },
     {
-      title: "2-Stage e-Office BPMN Approval",
+      title: "Work applications",
       status: "daco",
-      body:
-        "Embedded Flowable BPMN engine in the primary API runtime. Document lifecycle management with automated SLAs (24h reminder / 48h escalation) and anti-self-approval enforcement.",
-    },
-    {
-      title: "Enterprise Identity & OIDC SSO",
-      status: "daco",
-      body:
-        "Keycloak OIDC SSO (PKCE S256) or password/JWT. IdP roles map directly to 3 RBAC tiers: ORG_OWNER, WORKSPACE_ADMIN, MEMBER. Issues machine-to-machine (M2M) ovk_ API keys.",
-    },
-    {
-      title: "Lakehouse & Embedded DuckDB OLAP",
-      status: "daco",
-      body:
-        "Real-time CDC via RabbitMQ writes Snappy-compressed Parquet on SeaweedFS S3. Embedded DuckDB runs complex analytical SQL queries without slowing down primary databases.",
-    },
-    {
-      title: "Headless REST API & Signed Webhooks",
-      status: "daco",
-      body:
-        "100% of capabilities exposed over standard RESTful endpoints at /api/v1/**. HMAC-SHA256-signed webhooks notify external systems with an outbox-backed retry mechanism.",
-    },
-    {
-      title: "APISIX Edge Security & Virus Quarantine",
-      status: "daco",
-      body:
-        "Apache APISIX edge gateway enforces route-based rate limits and security headers. ClamAV scans byte streams INSTREAM, quarantining malware at the perimeter before storage.",
+      body: "Create simple tools for sales, HR, operations, or any other business need.",
     },
   ],
   enterprise: {
@@ -706,7 +635,7 @@ const EN: LandingContent = {
     postmanTitle: "Sample Postman Collection",
     postmanPath: "contracts/postman/openvie_integration.postman_collection.json",
     docsLabel: "Explore Interactive API Reference & Playground",
-    docsHref: "/docs",
+    docsHref: "/en/docs",
     docsNote: "Interactive OpenAPI Playground with complete schemas, parameters, and executable mocks.",
   },
   boundaries: {
@@ -836,10 +765,10 @@ const EN: LandingContent = {
       "Security Disclosures: Please submit vulnerability reports via the project's private security channel for swift remediation.",
   },
   finalCta: {
-    title: "Ready to own your enterprise RAG stack?",
-    body: "Review the architecture — Launch in one command — Retain 100% control over internal knowledge.",
+    title: "Ready to put your internal knowledge to work on your own infrastructure?",
+    body: "Review the source — Launch with one command — Keep full control of your internal knowledge.",
     primary: { label: "Self-host from GitHub", href: "https://github.com/OpenVie/OpenVie" },
-    secondary: { label: "Explore API Reference", href: "/docs" },
+    secondary: { label: "Explore API Reference", href: "/en/docs" },
   },
   menuLabel: "Open navigation menu",
   footer: {
@@ -850,7 +779,6 @@ const EN: LandingContent = {
           { label: "Solutions", href: "#co-che" },
           { label: "Architecture", href: "#kien-truc" },
           { label: "Capabilities", href: "#nang-luc" },
-          { label: "Standards", href: "#ranh-gioi" },
           { label: "Deployment", href: "#trien-khai" },
           { label: "Roadmap", href: "#lo-trinh" },
           { label: "Changelog (CHANGELOG.md)", href: "https://github.com/OpenVie/OpenVie/blob/main/CHANGELOG.md" },
@@ -859,7 +787,7 @@ const EN: LandingContent = {
       {
         title: "Technical Docs",
         links: [
-          { label: "Interactive API Reference", href: "/docs" },
+          { label: "Interactive API Reference", href: "/en/docs" },
           { label: "Engineering blog", href: "/en/blog" },
           { label: "Source on GitHub (OpenVie/OpenVie)", href: "https://github.com/OpenVie/OpenVie" },
           { label: "System Architecture (docs/ARCHITECTURE.md)", href: "#kien-truc" },
@@ -877,7 +805,7 @@ const EN: LandingContent = {
       },
     ],
     pathNote:
-      "OpenVie is an enterprise self-hosted RAG platform optimized for Vietnamese. Naming and internal identifiers follow the project repository architecture.",
+      "OpenVie is an internal operations platform that connects an organization's documents, workflows, and business applications.",
     licenseLine: "Apache License 2.0 · Copyright 2026 LinkedNodeDigital · Sovereign Enterprise AI",
   },
 };
@@ -897,7 +825,7 @@ export function landingJsonLd(locale: "vi" | "en") {
       logo: "https://openvie.org/openvie-logo.svg",
       description: isVi
         ? "Nền tảng RAG tự lưu trữ tối ưu tiếng Việt cho doanh nghiệp và cơ quan nhà nước."
-        : "Enterprise-grade self-hosted RAG platform optimized for Vietnamese and internal documents.",
+        : "A self-hosted platform connecting documents, workflows, and internal data for better operations.",
     },
     software: {
       "@context": "https://schema.org",
@@ -913,7 +841,7 @@ export function landingJsonLd(locale: "vi" | "en") {
       },
       description: isVi
         ? "Nền tảng RAG tự lưu trữ (self-hosted) ưu tiên tiếng Việt cho tài liệu nội bộ, giấy phép Apache License 2.0."
-        : "Self-hosted RAG platform optimized for Vietnamese for internal documents under Apache License 2.0.",
+        : "Self-hosted platform for documents, workflows, and internal data under the Apache License 2.0.",
     },
   };
 }
