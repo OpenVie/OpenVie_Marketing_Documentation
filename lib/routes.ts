@@ -32,9 +32,9 @@ export const SITE_ROUTES: SiteRoute[] = [
   {
     path: "/en",
     label: "Home (EN)",
-    title: "OpenVie — Self-hosted RAG for internal documents",
+    title: "OpenVie — Knowledge for better operations",
     description:
-      "Self-hosted Vietnamese-first RAG for internal documents, Apache-2.0. Cited answers, abstention without evidence, two-level approval, DuckDB OLAP.",
+      "Connect documents, workflows, and internal data on your own infrastructure. Clear sources, controlled approvals, and Apache-2.0.",
     lastModified: "2026-10-31",
   },
   {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-interface NodeSpec {
+export interface NodeSpec {
   id: string;
   name: string;
   tier: "edge" | "core" | "ai" | "storage";
@@ -15,7 +15,7 @@ interface NodeSpec {
   isOptional?: boolean;
 }
 
-const ARCH_NODES: NodeSpec[] = [
+export const ARCH_NODES: NodeSpec[] = [
   // Edge Plane
   {
     id: "apisix",
@@ -180,11 +180,22 @@ const ARCH_NODES: NodeSpec[] = [
   },
 ];
 
+function nodeMonogram(node: NodeSpec) {
+  return node.name
+    .split(" ")
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
 export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "vi" | "en" }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>("spring-boot");
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const isVi = locale === "vi";
 
-  const selectedNode = ARCH_NODES.find((n) => n.id === selectedNodeId) || ARCH_NODES[3];
+  const activeNodeId = hoveredNodeId ?? selectedNodeId;
+  const selectedNode = ARCH_NODES.find((n) => n.id === activeNodeId) || ARCH_NODES[3];
 
   const tiers = [
     {
@@ -214,9 +225,9 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
   ];
 
   return (
-    <div className="w-full space-y-6">
+    <div className="ov-base-architecture w-full space-y-6">
       {/* Visual Blueprint Matrix */}
-      <div className="rounded-2xl border border-white/10 bg-[#0F172A]/90 backdrop-blur-xl p-5 md:p-6 shadow-2xl ring-1 ring-white/5">
+      <div className="ov-base-board rounded-[1.5rem] border border-white/10 bg-[#0F172A]/90 p-5 shadow-2xl backdrop-blur-xl md:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6 border-b border-white/10 pb-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#1FB6FF]">
@@ -236,11 +247,12 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
           {tiers.map((tier, tierIdx) => (
             <div
               key={tier.id}
-              className="rounded-xl border border-white/5 bg-[#0F172A]/60 p-4 transition-all hover:border-white/15"
+              data-tier={tier.id}
+              className="ov-base-tier rounded-xl border border-white/5 bg-[#0F172A]/60 p-4 transition-all"
             >
               <div className="flex items-center justify-between gap-2 mb-3">
                 <span className="text-xs font-semibold text-slate-300 flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#1FB6FF] shadow-[0_0_6px_#1FB6FF]" />
+                  <span className="ov-base-tier-dot h-2 w-2 rounded-full bg-[#1FB6FF] shadow-[0_0_6px_#1FB6FF]" />
                   {tier.label}
                 </span>
                 <span className="text-[11px] font-mono text-slate-400 bg-black/40 px-2.5 py-0.5 rounded border border-white/5 font-semibold">
@@ -250,19 +262,25 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 {tier.nodes.map((node) => {
-                  const isSelected = node.id === selectedNodeId;
+                  const isSelected = node.id === activeNodeId;
                   return (
                     <button
                       key={node.id}
                       type="button"
                       onClick={() => setSelectedNodeId(node.id)}
-                      className={`relative text-left p-3.5 rounded-xl border transition-all duration-200 flex flex-col justify-between ${
+                      onMouseEnter={() => setHoveredNodeId(node.id)}
+                      onMouseLeave={() => setHoveredNodeId(null)}
+                      onFocus={() => setHoveredNodeId(node.id)}
+                      onBlur={() => setHoveredNodeId(null)}
+                      aria-pressed={isSelected}
+                      className={`ov-layer-app relative flex min-h-[126px] flex-col justify-between rounded-xl border p-3.5 text-left transition-all duration-200 ${
                         isSelected
-                          ? "bg-[#1FB6FF]/15 border-[#1FB6FF] text-white shadow-lg shadow-[#1FB6FF]/15 ring-1 ring-[#1FB6FF]"
+                          ? "is-selected bg-[#1FB6FF]/15 border-[#1FB6FF] text-white shadow-lg shadow-[#1FB6FF]/15 ring-1 ring-[#1FB6FF]"
                           : "bg-black/40 border-white/10 text-slate-300 hover:border-[#1FB6FF]/50 hover:bg-white/5"
                       }`}
                     >
-                      <div>
+                      <div className="grid grid-cols-[31px_1fr] gap-x-3">
+                        <span className="ov-layer-app-icon">{nodeMonogram(node)}</span>
                         <div className="flex items-center justify-between gap-1 mb-1">
                           <b className="text-xs font-bold text-white tracking-tight">{node.name}</b>
                           {node.isOptional && (
@@ -272,12 +290,12 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
                           )}
                         </div>
                         {node.port && (
-                          <span className="font-mono text-[11px] text-[#1FB6FF] block mb-1 font-bold">
+                          <span className="col-start-2 font-mono text-[11px] text-[#1FB6FF] block mb-1 font-bold">
                             {node.port}
                           </span>
                         )}
                       </div>
-                      <span className="text-[10px] text-slate-400 truncate block mt-2 border-t border-white/5 pt-1.5">
+                      <span className="text-[10px] leading-4 text-slate-400 block mt-3 border-t border-white/10 pt-2">
                         {node.protocol}
                       </span>
                     </button>
@@ -296,7 +314,7 @@ export default function InteractiveArchitecture({ locale = "vi" }: { locale?: "v
       </div>
 
       {/* Node Inspector Drawer */}
-      <div className="rounded-2xl border border-[#1FB6FF]/40 bg-[#0F172A]/95 backdrop-blur-xl p-5 md:p-6 shadow-xl ring-1 ring-[#1FB6FF]/20">
+      <div className="ov-base-inspector rounded-2xl border border-[#1FB6FF]/40 bg-[#0F172A]/95 p-5 shadow-xl ring-1 ring-[#1FB6FF]/20 backdrop-blur-xl md:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1FB6FF]/20 text-[#1FB6FF] font-black border border-[#1FB6FF]/40 text-base shadow-[0_0_12px_rgba(31,182,255,0.2)]">
