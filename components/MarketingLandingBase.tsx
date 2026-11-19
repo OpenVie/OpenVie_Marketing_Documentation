@@ -128,7 +128,7 @@ export default function MarketingLandingBase({ content }: { content: LandingCont
                   className="block aspect-video w-full object-cover"
                   aria-label="OpenVie product demonstration video"
                 >
-                  <source src="/demo.mp4" type="video/mp4" />
+                  <source src="/Demo1.mp4" type="video/mp4" />
                 </video>
                 <div className="hidden flex items-center justify-between border-b border-white/10 pb-4">
                   <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-[#1fb6ff]" /><span className="text-xs font-bold text-white">OpenVie workspace</span></div>
